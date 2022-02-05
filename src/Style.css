@@ -7,7 +7,7 @@ body{
     border-color: transparent !important;
 }
 
-
+/* Navbar CSS */
 input[type="checkbox"] {
     content: url('https://cdn-icons-png.flaticon.com/512/6686/6686997.png');
     appearance: none;
@@ -20,6 +20,8 @@ input[type="checkbox"]:checked {
     content: url('https://cdn-icons.flaticon.com/png/512/1620/premium/1620739.png?token=exp=1644042115~hmac=8c734d49f2ff379704a5083da5bbe300');
 }
 
+
+/* Categories CSS */
 .categories-parent-container{
     width: 90%;
     padding-left: 0px;
@@ -30,8 +32,8 @@ input[type="checkbox"]:checked {
     margin-top: 20px;
     margin-left: 0px;
     margin-bottom: 5px;
-    font-size: 1.2rem;
-    color: rgb(49, 49, 49);
+    font-size: 1.1rem;
+    color: rgb(139, 136, 136);
 }
 
 .categories-child-container{
@@ -50,4 +52,81 @@ input[type="checkbox"]:checked {
     text-decoration: none;
     color: cornflowerblue;
     padding: 10px;
+}
+
+
+/* Posts CSS */
+.posts-parent-container{
+    margin-top: 30px;
+    height: max-content;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Postcard CSS */
+.post-body{
+    height: 200px;
+    width: 340px;
+    margin: 10px;
+    background-color: #EAFDFE;
+    border-radius: 13px;
+    padding: 5px;
+    border: 2px solid transparent;
+    transition: 0.3s;
+    display: flex;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.09);
+    cursor: pointer;
+}
+.post-body:hover{
+    border: 2px solid #13AAFF;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.09);
+}
+
+.post-body-image{
+    width: 45%;
+    height: 100%;
+}
+.post-body-image img{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+}
+.post-body-details{
+    height: 100%;
+    width: 55%;
+    overflow: auto;
+}
+.post-body-details-category{
+    font-size: 12px;
+    margin-left: 10px;
+    color: #ffffff;
+    margin-bottom: 2px;
+    background-color: #6836dd;
+    display: inline-block;
+    padding: 4px;
+    border-radius: 4px;
+}
+.post-body-details-title{
+    margin-top: 8px;
+    margin-bottom: 0px;
+    font-size: 18px;
+    margin-left: 10px;
+    color: #000000;
+}
+.post-body-details-author{
+    margin-top: 0px;
+    font-size: 13px;
+    margin-left: 10px;
+    color: #0f7999;
+    margin-bottom: 5px;
+}
+.post-body-details-description{
+    margin-top: 0px;
+    font-size: 13px;
+    margin-left: 10px;
+    color: #000000b0;
 }

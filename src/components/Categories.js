@@ -4,7 +4,7 @@ function Categories() {
     return (
         <>
         <div className="container categories-parent-container">
-        <p>All Categories</p>
+        <p></p>
         </div>
             <div className="container shadow-sm bg-white rounded categories-child-container">
                 <Link className="categories-link" to="">All</Link>
