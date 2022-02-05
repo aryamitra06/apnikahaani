@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
+
+body{
+    font-family: 'Poppins', sans-serif;
+}
+.navbar-toggler{
+    border-color: transparent !important;
+}
+
+
+input[type="checkbox"] {
+    content: url('https://cdn-icons-png.flaticon.com/512/6686/6686997.png');
+    appearance: none;
+    display: block;
+    width: 30px;
+    height: 30px;
+}
+
+input[type="checkbox"]:checked {
+    content: url('https://cdn-icons.flaticon.com/png/512/1620/premium/1620739.png?token=exp=1644042115~hmac=8c734d49f2ff379704a5083da5bbe300');
+}
+
+
