@@ -20,4 +20,34 @@ input[type="checkbox"]:checked {
     content: url('https://cdn-icons.flaticon.com/png/512/1620/premium/1620739.png?token=exp=1644042115~hmac=8c734d49f2ff379704a5083da5bbe300');
 }
 
+.categories-parent-container{
+    width: 90%;
+    padding-left: 0px;
+    padding-right:0px;
+}
 
+.categories-parent-container p{
+    margin-top: 20px;
+    margin-left: 0px;
+    margin-bottom: 5px;
+    font-size: 1.2rem;
+    color: rgb(49, 49, 49);
+}
+
+.categories-child-container{
+    height: 60px;
+    width: 90%;
+    margin-top: 10px;
+    overflow: auto;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    padding-left: 0px;
+    padding-right:0px;
+}
+
+.categories-link{
+    text-decoration: none;
+    color: cornflowerblue;
+    padding: 10px;
+}

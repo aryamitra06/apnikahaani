@@ -5,7 +5,7 @@ function Navbar() {
       <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 bg-white rounded">
   <div className="container">
-    <Link className="navbar-brand" to="/">ApniKahani</Link>
+    <Link className="navbar-brand" to="/">ApniKahaani</Link>
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <input type="checkbox"></input>
     </button>
