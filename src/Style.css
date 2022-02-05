@@ -1,5 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
 
+/* Scrollbar  CSS */
+::-webkit-scrollbar {
+    width: 4px;
+}
+  
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+  
+::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    border: 2px solid #ccf3f5;
+}
+
 body{
     font-family: 'Poppins', sans-serif;
 }
@@ -9,7 +23,7 @@ body{
 
 /* Navbar CSS */
 input[type="checkbox"] {
-    content: url('https://cdn-icons-png.flaticon.com/512/6686/6686997.png');
+    content: url('./Assets/Images/nav-open.png');
     appearance: none;
     display: block;
     width: 30px;
@@ -17,7 +31,7 @@ input[type="checkbox"] {
 }
 
 input[type="checkbox"]:checked {
-    content: url('https://cdn-icons.flaticon.com/png/512/1620/premium/1620739.png?token=exp=1644042115~hmac=8c734d49f2ff379704a5083da5bbe300');
+    content: url('./Assets/Images/nav-close.png');
 }
 
 
@@ -57,7 +71,6 @@ input[type="checkbox"]:checked {
 
 /* Posts CSS */
 .posts-parent-container{
-    margin-top: 30px;
     height: max-content;
     width: 100%;
     display: flex;
@@ -111,9 +124,10 @@ input[type="checkbox"]:checked {
     border-radius: 4px;
 }
 .post-body-details-title{
-    margin-top: 8px;
+    margin-top: 3px;
     margin-bottom: 0px;
-    font-size: 18px;
+    font-size: 15px;
+    font-weight: blod;
     margin-left: 10px;
     color: #000000;
 }
@@ -126,7 +140,39 @@ input[type="checkbox"]:checked {
 }
 .post-body-details-description{
     margin-top: 0px;
-    font-size: 13px;
+    font-size: 12px;
     margin-left: 10px;
     color: #000000b0;
+}
+
+/* Add Story button */
+.addstory-btn{
+    display: inline-block;
+    user-select: none;
+    padding: 8px 20px;
+    background-color: #33e0c9a9;
+    border-radius: 9px;
+    color: rgb(9, 39, 56);
+    cursor: pointer;
+    margin-bottom: 5px;
+    border: 2px solid transparent;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.09);
+    transition: 0.4s;
+}
+.addstory-btn:hover{
+    border: 2px solid #13a9ff94;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.09);
+}
+.addstory-btn:active{
+    transform: scale(1.04);
+}
+
+.add-story-parent-container{
+    margin-top: 15px;
+    margin-bottom: 0px;
+    padding-left: 0px;
+    padding-right:0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

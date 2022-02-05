@@ -1,10 +1,12 @@
 import React from 'react';
+import Addstory from './Addstory';
 import Postcard from './Postcard';
 
 function Posts() {
   return(
       <>
-      <div className="posts-parent-container">
+      <Addstory/>
+      <div className="posts-parent-container" data-simplebar>
           <Postcard/>
           <Postcard/>
           <Postcard/>
