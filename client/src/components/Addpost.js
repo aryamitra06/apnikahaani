@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { createPost } from '../service/api';
+import {useHistory } from 'react-router-dom'
 import React from 'react';
 
 const initialValues = {
@@ -11,16 +12,17 @@ const initialValues = {
   created: new Date()
 }
 function Addpost() {
+  const history = useHistory();
   const [post, setPost] = useState(initialValues);
   const {title, desc} = post;
 
   const handleChange = (e) => {
     setPost({ ...post, [e.target.name]: e.target.value });
-    console.log(post);
   }
 
   const publishPost = async () => {
     await createPost(post);
+    history.push('/');
   }
   return(
       <>
