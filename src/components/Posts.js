@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Addstory from './Addstory';
 import Postcard from './Postcard';
 
@@ -9,7 +10,7 @@ function Posts() {
       <Addstory/>
       <div className="posts-parent-container" data-simplebar>
       {posts.map(post => (
-        <Postcard title="This is the title"/>
+        <Link className='link' to='/view'><Postcard title="This is the title"/></Link>
       ))}
           
       </div>

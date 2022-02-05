@@ -16,6 +16,10 @@ function Viewpost() {
               <p className="viewpost-post-description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
               Ea mollitia quo, harum ipsam, hic alias modi rem, beatae temporibus quia est veniam unde doloremque! 
               Exercitationem dolores laboriosam facere praesentium excepturi.</p>
+              <div className="action-handle">
+              <p className='edit-btn'><i className="fas fa-edit"></i> Edit</p>
+              <p className='del-btn'><i className="fas fa-trash"></i> Delete</p>
+              </div>
           </div>
       </div>
       </>
