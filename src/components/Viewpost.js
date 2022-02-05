@@ -5,7 +5,7 @@ function Viewpost() {
       <>
       <div className="viewpost-parent">
         <div className="viewpsot-header">
-        <span className="share-btn"><i class="fas fa-share"></i></span>
+        <span className="share-btn"><i className="fas fa-share"></i></span>
             <img src="https://images.pexels.com/photos/10937212/pexels-photo-10937212.jpeg" alt="" srcset="" />
         </div>
       </div>
