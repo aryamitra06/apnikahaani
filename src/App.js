@@ -4,6 +4,9 @@ import About from "./components/About";
 import './Style.css'
 import Home from "./components/Home";
 import Viewpost from "./components/Viewpost";
+import Editpost from "./components/Editpost";
+import Addpost from "./components/Addpost";
+
 
 function App() {
   return (
@@ -17,8 +20,14 @@ function App() {
           <Route exact path="/about">
             <About />
           </Route>
+          <Route exact path="/add">
+            <Addpost/>
+          </Route>
           <Route exact path="/view">
             <Viewpost/>
+          </Route>
+          <Route exact path="/edit">
+            <Editpost/>
           </Route>
         </Switch>
       </Router>
