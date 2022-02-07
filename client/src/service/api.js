@@ -23,3 +23,8 @@ export const getPost = async (id) => {
 export const editPost = async (id, post) => {
     return await axios.put(`${url}/edit/${id}`, post)
 }
+
+// deleting the post
+export const deletePost = async(id) =>{
+    await axios.delete(`${url}/delete/${id}`)
+}

@@ -49,7 +49,7 @@ function Editpost() {
               <input onChange={(e) => handleChange(e)} type="text" name="title" value={post.title}  placeholder='Title...'/>
               <input type="file" name="" id="" required/>
               <textarea onChange={(e) => handleChange(e)} name="desc" value={post.desc} placeholder='Description...'></textarea>
-              <button type="submit" onClick={() => editPostHandle()} >Edit</button>
+              <button type="submit" onClick={() => editPostHandle()} >Save</button>
           </div>
       </div>
       </>

@@ -48,6 +48,12 @@ router.put('/edit/:id', async (req, res) => {
     }
 })
 
+//deleting the post
+router.delete('/delete/:id', async(req, res) => {
+    await Post.deleteOne({_id: req.params.id});
+    let posts = await Post.find();
+    res.json(posts);
+})
 
 
 export default router;

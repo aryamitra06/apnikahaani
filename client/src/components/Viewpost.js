@@ -1,9 +1,10 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { getPost } from '../service/api';
+import { Link, useParams, useHistory } from 'react-router-dom';
+import { getPost, deletePost } from '../service/api';
 
 function Viewpost() {
+  const history = useHistory();
   const { id } = useParams();
   const [post, setPost] = useState({});
 
@@ -11,11 +12,14 @@ function Viewpost() {
     const fetchData = async () => {
       let data = await getPost(id);
       setPost(data);
-      console.log(data);
     }
     fetchData();
   }, []);
 
+  const deletePostHandle = async () => {
+    await deletePost(id);
+    history.push('/');
+  }
 
   return (
     <>
@@ -33,7 +37,7 @@ function Viewpost() {
           <Link className='link' to={`/edit/${post._id}`}>
             <p className='edit-btn'><i className="fas fa-edit"></i> Edit</p>
           </Link>
-          <p className='del-btn'><i className="fas fa-trash"></i> Delete</p>
+          <p className='del-btn' onClick={() => deletePostHandle()}><i className="fas fa-trash"></i> Delete</p>
         </div>
       </div>
     </>
