@@ -35,6 +35,19 @@ router.get('/view/:id', async (req, res) => {
     }
 })
 
+//updating the post
+router.put('/edit/:id', async (req, res) => {
+    try {
+        let post = await Post.findById(req.params.id);
+        post = req.body;
+        const editPost = new Post(post);
+        await Post.updateOne({_id: req.params.id}, editPost);
+        res.json(post);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+})
+
 
 
 export default router;

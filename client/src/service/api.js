@@ -14,8 +14,12 @@ export const getAllPosts = async () => {
 }
 
 // viewing post
-
 export const getPost = async (id) => {
     const res = await axios.get(`${url}/view/${id}`)
     return res.data;
+}
+
+// editing the post
+export const editPost = async (id, post) => {
+    return await axios.put(`${url}/edit/${id}`, post)
 }
