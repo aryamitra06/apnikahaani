@@ -1,16 +1,28 @@
 import React from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { getAllPosts } from '../service/api';
 import Addstory from './Addstory';
 import Postcard from './Postcard';
 
 function Posts() {
-    let posts = [1,2,3,4,5];
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getAllPosts();
+      console.log(data);
+      setPosts(data);
+    }
+    fetchData();
+  }, []);
+  
   return(
       <>
       <Addstory/>
       <div className="posts-parent-container" data-simplebar>
       {posts.map(post => (
-        <Link className='link' to='/view'><Postcard title="This is the title"/></Link>
+        <Link className='link' to='/view'><Postcard category = {post.category} title={post.title} author = {post.username} desc = {post.desc} /></Link>
       ))}
           
       </div>

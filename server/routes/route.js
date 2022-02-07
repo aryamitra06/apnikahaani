@@ -3,15 +3,26 @@ import Post from '../model/Post.js';
 
 const router = express.Router();
 
+
+//route to fetch all the posts
+router.get('/', async (req, res) => {
+    try {
+        let posts = await Post.find();
+        res.json(posts);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+})
+
 //route to add a post
 router.post('/add', async (req, res) => {
-        try {
-                const post = await new Post(req.body);
-                post.save();
-                res.status(200).json('Post saved successfully');
-            } catch (error) {
-                res.status(500).json(error);
-            }
+    try {
+        const post = await new Post(req.body);
+        post.save();
+        res.json(post);
+    } catch (error) {
+        res.status(500).json(error);
+    }
 })
 
 
