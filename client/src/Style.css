@@ -86,10 +86,10 @@ input[type="checkbox"]:checked {
 
 /* Postcard CSS */
 .post-body{
-    height: 200px;
-    width: 340px;
+    height: 180px;
+    width: 330px;
     margin: 10px;
-    background-color: #EAFDFE;
+    background-color: #DEFCF9;
     border-radius: 13px;
     padding: 5px;
     border: 2px solid transparent;
@@ -105,7 +105,7 @@ input[type="checkbox"]:checked {
 }
 
 .post-body-image{
-    width: 45%;
+    width: 50%;
     height: 100%;
 }
 .post-body-image img{
@@ -116,7 +116,7 @@ input[type="checkbox"]:checked {
 }
 .post-body-details{
     height: 100%;
-    width: 55%;
+    width: 50%;
     overflow: auto;
 }
 .post-body-details-category{

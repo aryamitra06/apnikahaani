@@ -3,12 +3,20 @@ import Post from '../model/Post.js';
 
 const router = express.Router();
 
-
 //route to fetch all the posts
 router.get('/', async (req, res) => {
+    let posts;
+    let username =req.query.username;
     try {
-        let posts = await Post.find();
-        res.json(posts);
+        // handles ?username = ...
+        if(username){
+            posts = await Post.find({ username: username })
+        }
+        else{
+            posts = await Post.find();
+        }   
+        res.json(posts);  
+        console.log(posts);
     } catch (error) {
         res.status(500).json(error);
     }

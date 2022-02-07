@@ -8,8 +8,8 @@ export const createPost = async (post) => {
 }
 
 // getting all the posts
-export const getAllPosts = async () => {
-    const res = await axios.get(`${url}`);
+export const getAllPosts = async (param) => {
+    const res = await axios.get(`${url}/${param}`);
     return res.data;
 }
 

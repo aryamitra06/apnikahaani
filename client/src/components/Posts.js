@@ -1,21 +1,21 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { getAllPosts } from '../service/api';
 import Addstory from './Addstory';
 import Postcard from './Postcard';
 
 function Posts() {
   const [posts, setPosts] = useState([]);
+  const { search } = useLocation();
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getAllPosts();
-      console.log(data);
+      const data = await getAllPosts(search);
       setPosts(data);
     }
     fetchData();
-  }, []);
+  }, [search]);
   
   return(
       <>
