@@ -12,3 +12,10 @@ export const getAllPosts = async () => {
     const res = await axios.get(`${url}`);
     return res.data;
 }
+
+// viewing post
+
+export const getPost = async (id) => {
+    const res = await axios.get(`${url}/view/${id}`)
+    return res.data;
+}

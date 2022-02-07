@@ -22,7 +22,7 @@ function Posts() {
       <Addstory/>
       <div className="posts-parent-container" data-simplebar>
       {posts.map(post => (
-        <Link className='link' to='/view'><Postcard category = {post.category} title={post.title} author = {post.username} desc = {post.desc} /></Link>
+        <Link className='link' to={`/view/${post._id}`}><Postcard category = {post.category} title={post.title} author = {post.username} desc = {post.desc} /></Link>
       ))}
           
       </div>

@@ -1,28 +1,42 @@
 import React from 'react';
+import { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { getPost } from '../service/api';
 
 function Viewpost() {
-  return(
-      <>
+  const { id } = useParams();
+  const [post, setPost] = useState({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      let data = await getPost(id);
+      setPost(data);
+      console.log(data);
+    }
+    fetchData();
+  }, []);
+
+
+  return (
+    <>
       <div className="viewpost-parent">
         <div className="viewpsot-header">
-        <span className="share-btn"><i className="fas fa-share"></i></span>
-            <img src="https://images.pexels.com/photos/10937212/pexels-photo-10937212.jpeg" alt="" srcset="" />
+          <span className="share-btn"><i className="fas fa-share"></i></span>
+          <img src="https://images.pexels.com/photos/10937212/pexels-photo-10937212.jpeg" alt="" srcset="" />
         </div>
       </div>
       <div className="viewpost-child">
-          <div className="viewpost-post-body">
-              <p className="viewpost-post-title">Post Title</p>
-              <p className="viewpost-post-author-and-post-date">By Aryamitra Chaudhuri 2.2.2022</p>
-              <p className="viewpost-post-description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
-              Ea mollitia quo, harum ipsam, hic alias modi rem, beatae temporibus quia est veniam unde doloremque! 
-              Exercitationem dolores laboriosam facere praesentium excepturi.</p>
-              <div className="action-handle">
-              <p className='edit-btn'><i className="fas fa-edit"></i> Edit</p>
-              <p className='del-btn'><i className="fas fa-trash"></i> Delete</p>
-              </div>
-          </div>
+        <div className="viewpost-post-body">
+          <p className="viewpost-post-title">{post.title}</p>
+          <p className="viewpost-post-author-and-post-date">By {post.username} at {new Date(post.created).toDateString()}</p>
+          <p className="viewpost-post-description">{post.desc}</p>
+          <Link className='link' to={`/edit/${post._id}`}>
+            <p className='edit-btn'><i className="fas fa-edit"></i> Edit</p>
+          </Link>
+          <p className='del-btn'><i className="fas fa-trash"></i> Delete</p>
+        </div>
       </div>
-      </>
+    </>
   );
 }
 

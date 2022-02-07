@@ -25,5 +25,16 @@ router.post('/add', async (req, res) => {
     }
 })
 
+//viewing the post
+router.get('/view/:id', async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        res.json(post);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+})
+
+
 
 export default router;

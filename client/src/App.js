@@ -23,10 +23,10 @@ function App() {
           <Route exact path="/add">
             <Addpost/>
           </Route>
-          <Route exact path="/view">
+          <Route exact path="/view/:id">
             <Viewpost/>
           </Route>
-          <Route exact path="/edit">
+          <Route exact path="/edit/:id">
             <Editpost/>
           </Route>
         </Switch>

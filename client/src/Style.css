@@ -23,6 +23,7 @@ body{
 }
 .link{
     text-decoration: none;
+    
 }
 /* Navbar CSS */
 input[type="checkbox"] {
@@ -279,17 +280,12 @@ input[type="checkbox"]:checked {
 }
 
 /*edit and del btn*/
-.action-handle{
-    display: flex;
-    align-items: center;
-    justify-content:flex-end;
 
-}
 .edit-btn, .del-btn{
     margin: 10px;
     font-weight:bolder;
     margin-top: 5px;
-    width: 10%;
+    width: 100%;
     padding: 10px 13px;
     outline: none;
     border: none;
@@ -348,8 +344,8 @@ input[type="checkbox"]:checked {
         margin-left: 75%;
     }
     .edit-btn, .del-btn{
-        width: 48%;
-        margin: 0px;
+        width: 100%;
+        margin: 10px;
     }
     .action-handle{
         justify-content: space-between;

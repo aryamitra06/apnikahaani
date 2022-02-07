@@ -33,8 +33,8 @@ function Addpost() {
       </div>
       <div className="viewpost-child">
           <div className="viewpost-post-body">
-              <input onChange={(e) => handleChange(e)} type="text" name="title" value={title} id="title" placeholder='Title...' required/>
-              {/* <input onChange={(e) => handleChange(e)} type="file" name="" id="" required/> */}
+            <input onChange={(e) => handleChange(e)} type="text" name="title" value={title} id="title" placeholder='Title...' required/>
+              <input onChange={(e) => handleChange(e)} type="file" name="" id=""/>
               <textarea onChange={(e) => handleChange(e)} name="desc" value={desc} id="desc" placeholder='Description...' required></textarea>
               <button type="submit" onClick={() => publishPost()}>Publish</button>
           </div>
