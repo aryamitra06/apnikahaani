@@ -7,7 +7,7 @@ const initialValues = {
   title: '',
   desc: '',
   cover: '',
-  category: 'All',
+  category: 'Tragedy',
   username: 'aryamitra06',
   created: new Date()
 }

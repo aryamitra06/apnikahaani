@@ -6,11 +6,15 @@ const router = express.Router();
 //route to fetch all the posts
 router.get('/', async (req, res) => {
     let posts;
-    let username =req.query.username;
+    let username = req.query.username;
+    let category = req.query.category;
     try {
         // handles ?username = ...
         if(username){
             posts = await Post.find({ username: username })
+        }
+        else if(category){
+            posts = await Post.find({ category: category })
         }
         else{
             posts = await Post.find();

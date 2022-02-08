@@ -2,7 +2,6 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { getAllPosts } from '../service/api';
-import Addstory from './Addstory';
 import Postcard from './Postcard';
 
 function Posts() {
@@ -16,17 +15,19 @@ function Posts() {
     }
     fetchData();
   }, [search]);
-  
-  return(
-      <>
-      <Addstory/>
-      <div className="posts-parent-container" data-simplebar>
-      {posts.map(post => (
-        <Link className='link' to={`/view/${post._id}`}><Postcard category = {post.category} title={post.title} author = {post.username} desc = {post.desc} /></Link>
-      ))}
-          
+
+  return (
+    <>
+      <div className="container add-story-parent-container">
+        <Link to="/add"><p className="addstory-btn"><i className="fas fa-plus"></i> Add Story</p></Link>
       </div>
-      </>
+      <div className="posts-parent-container" data-simplebar>
+        {posts.map(post => (
+          <Link className='link' to={`/view/${post._id}`}><Postcard category={post.category} title={post.title} author={post.username} desc={post.desc} /></Link>
+        ))}
+
+      </div>
+    </>
   );
 }
 

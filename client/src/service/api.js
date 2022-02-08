@@ -7,7 +7,7 @@ export const createPost = async (post) => {
     return await axios.post(`${url}/add`, post);
 }
 
-// getting all the posts
+// getting all the posts (adding param so that it can handle query after that)
 export const getAllPosts = async (param) => {
     const res = await axios.get(`${url}/${param}`);
     return res.data;
