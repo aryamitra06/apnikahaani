@@ -28,3 +28,8 @@ export const editPost = async (id, post) => {
 export const deletePost = async(id) =>{
     await axios.delete(`${url}/delete/${id}`)
 }
+
+//upload file handler
+export const uploadFile = async(post) =>{
+    return await axios.post(`${url}/file/upload`, post)
+}

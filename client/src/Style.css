@@ -279,6 +279,32 @@ input[type="checkbox"]:checked {
     border: 2px solid #13AAFF;
 }
 
+#fileupload{
+    display: none;
+}
+label{
+    display: inline-block;
+    user-select: none;
+    padding: 8px 20px;
+    background-color: #33e0c9a9;
+    border-radius: 9px;
+    color: rgb(9, 39, 56);
+    cursor: pointer;
+    margin-bottom: 5px;
+    border: 2px solid transparent;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.09);
+    transition: 0.4s;
+}
+label:hover{
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.09);
+    border: 2px solid #13AAFF;
+}
+
+label:active{
+    transform: scale(1.02);
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.09);
+    border: 2px solid #13AAFF;
+}
 /*edit and del btn*/
 
 .edit-btn, .del-btn{
