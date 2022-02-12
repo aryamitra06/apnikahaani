@@ -11,7 +11,7 @@ function Categories() {
                 <Link className="categories-link" to="/?category=Rebirth">Rebirth</Link>
                 <Link className="categories-link" to="/?category=Tragedy">Tragedy</Link>
                 <Link className="categories-link" to="/?category=Quest">Quest</Link>
-                <Link className="categories-link" to="/?category=return">Return</Link>
+                <Link className="categories-link" to="/?category=Return">Return</Link>
             </div>
         </>
     );

@@ -1,5 +1,5 @@
-import { useState,useEffect } from 'react';
-import { createPost,uploadFile } from '../service/api';
+import { useState, useEffect } from 'react';
+import { createPost, uploadFile } from '../service/api';
 import { useHistory } from 'react-router-dom'
 import React from 'react';
 
@@ -7,7 +7,7 @@ const initialValues = {
   title: '',
   desc: '',
   cover: '',
-  category: 'Tragedy',
+  category: '',
   username: 'aryamitra06',
   created: new Date()
 }
@@ -21,18 +21,18 @@ function Addpost() {
   const [image, setImage] = useState('');
 
   useEffect(() => {
-    const fetchImage = async () => { 
-        if(file) {
-            const data = new FormData();
-            data.append("name", file.name);
-            data.append("file", file);
-            let image = await uploadFile(data);
-            post.cover = image.data;
-            setImage(post.cover);
-        }
+    const fetchImage = async () => {
+      if (file) {
+        const data = new FormData();
+        data.append("name", file.name);
+        data.append("file", file);
+        let image = await uploadFile(data);
+        post.cover = image.data;
+        setImage(post.cover);
+      }
     }
     fetchImage();
-}, [file])
+  }, [file])
 
 
   const handleChange = (e) => {
@@ -54,10 +54,16 @@ function Addpost() {
       <div className="viewpost-child">
         <div className="viewpost-post-body">
 
-            <input onChange={(e) => handleChange(e)} type="text" name="title" value={post.title} id="title" placeholder='Title...' required />
-            <input onChange={(e) => setFile(e.target.files[0])} type="file"/>
-            <textarea onChange={(e) => handleChange(e)} name="desc" value={post.desc} id="desc" placeholder='Description...' required></textarea>
-            <button onClick={() => publishPost()}>Publish</button>
+          <input onChange={(e) => handleChange(e)} type="text" name="title" value={post.title} id="title" placeholder='Title...' required />
+          <select onChange={(e) => handleChange(e)} value={post.category} name="category">
+            <option value="Rebirth">Rebirth</option>
+            <option value="Tragedy">Tragedy</option>
+            <option value="Quest">Quest</option>
+            <option value="Return">Return</option>
+          </select>
+          <input onChange={(e) => setFile(e.target.files[0])} type="file" />
+          <textarea onChange={(e) => handleChange(e)} name="desc" value={post.desc} id="desc" placeholder='Description...' required></textarea>
+          <button onClick={() => publishPost()}>Publish</button>
 
         </div>
       </div>

@@ -31,46 +31,52 @@ function Editpost() {
 
   //image handing
   useEffect(() => {
-    const fetchImage = async () => { 
-        if(file) {
-            const data = new FormData();
-            data.append("name", file.name);
-            data.append("file", file);
-            let image = await uploadFile(data);
-            post.cover = image.data;
-            setImage(image.data);
-        }
+    const fetchImage = async () => {
+      if (file) {
+        const data = new FormData();
+        data.append("name", file.name);
+        data.append("file", file);
+        let image = await uploadFile(data);
+        post.cover = image.data;
+        setImage(image.data);
+      }
     }
     fetchImage();
-}, [file])
+  }, [file])
 
 
   //button click to submit updated form
   const editPostHandle = async () => {
     await editPost(id, post);
     history.push(`/view/${id}`);
-}
+  }
 
   const handleChange = (e) => {
     setPost({ ...post, [e.target.name]: e.target.value });
   }
 
-  return(
-      <>
+  return (
+    <>
       <div className="viewpost-parent">
         <div className="viewpsot-header">
-            <img src={post.cover} />
+          <img src={post.cover} />
         </div>
       </div>
       <div className="viewpost-child">
-          <div className="viewpost-post-body">
-              <input onChange={(e) => handleChange(e)} type="text" name="title" value={post.title}  placeholder='Title...'/>
-              <input onChange={(e) => setFile(e.target.files[0])} type="file"/>
-              <textarea onChange={(e) => handleChange(e)} name="desc" value={post.desc} placeholder='Description...'></textarea>
-              <button type="submit" onClick={() => editPostHandle()} >Save</button>
-          </div>
+        <div className="viewpost-post-body">
+          <input onChange={(e) => handleChange(e)} type="text" name="title" value={post.title} placeholder='Title...' />
+          <select onChange={(e) => handleChange(e)} value={post.category} name="category">
+            <option value="Rebirth">Rebirth</option>
+            <option value="Tragedy">Tragedy</option>
+            <option value="Quest">Quest</option>
+            <option value="Return">Return</option>
+          </select>
+          <input onChange={(e) => setFile(e.target.files[0])} type="file" />
+          <textarea onChange={(e) => handleChange(e)} name="desc" value={post.desc} placeholder='Description...'></textarea>
+          <button type="submit" onClick={() => editPostHandle()} >Save</button>
+        </div>
       </div>
-      </>
+    </>
   );
 }
 
