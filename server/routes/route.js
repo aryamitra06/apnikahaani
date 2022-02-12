@@ -78,7 +78,7 @@ router.post('/file/upload', upload.single('file'), async (req, res) => {
     res.status(200).json(imageUrl);
 })
 
-//fetching image data
+//fetching image from chunk
 let gfs;
 const conn = mongoose.connection;
 conn.once('open', () => {

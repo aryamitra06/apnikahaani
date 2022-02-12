@@ -31,7 +31,7 @@ function Editpost() {
 
   //image handing
   useEffect(() => {
-    const getImage = async () => { 
+    const fetchImage = async () => { 
         if(file) {
             const data = new FormData();
             data.append("name", file.name);
@@ -41,7 +41,7 @@ function Editpost() {
             setImage(image.data);
         }
     }
-    getImage();
+    fetchImage();
 }, [file])
 
 
