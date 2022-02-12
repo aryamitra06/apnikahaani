@@ -17,7 +17,7 @@ function Addpost() {
   const [file, setFile] = useState('');
   const [image, setImage] = useState('');
 
-  const url = post.cover ? post.cover : 'https://images.pexels.com/photos/10937212/pexels-photo-10937212.jpeg';
+  const url = post.cover;
 
   useEffect(() => {
     const getImage = async () => { 
@@ -25,7 +25,7 @@ function Addpost() {
             const data = new FormData();
             data.append("name", file.name);
             data.append("file", file);
-            const image = await uploadFile(data);
+            let image = await uploadFile(data);
             post.cover = image.data;
             setImage(image.data);
         }
@@ -33,9 +33,7 @@ function Addpost() {
     getImage();
 }, [file])
 
-
   const { title, desc } = post;
-
   const handleChange = (e) => {
     setPost({ ...post, [e.target.name]: e.target.value });
   }
@@ -44,6 +42,7 @@ function Addpost() {
     await createPost(post);
     history.push('/');
   }
+
   return (
     <>
       <div className="viewpost-parent">
@@ -53,15 +52,12 @@ function Addpost() {
       </div>
       <div className="viewpost-child">
         <div className="viewpost-post-body">
-          <form>
+
             <input onChange={(e) => handleChange(e)} type="text" name="title" value={title} id="title" placeholder='Title...' required />
-            <input
-              onChange={(e) => setFile(e.target.files[0])}
-              type="file"
-            />
+            <input onChange={(e) => setFile(e.target.files[0])} type="file"/>
             <textarea onChange={(e) => handleChange(e)} name="desc" value={desc} id="desc" placeholder='Description...' required></textarea>
-            <button type="submit" onClick={() => publishPost()}>Publish</button>
-          </form>
+            <button onClick={() => publishPost()}>Publish</button>
+
         </div>
       </div>
     </>

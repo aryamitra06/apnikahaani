@@ -30,6 +30,6 @@ export const deletePost = async(id) =>{
 }
 
 //upload file handler
-export const uploadFile = async(post) =>{
-    return await axios.post(`${url}/file/upload`, post)
+export const uploadFile = async(data) =>{
+    return await axios.post(`${url}/file/upload`, data)
 }

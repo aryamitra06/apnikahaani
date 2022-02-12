@@ -25,7 +25,6 @@ function Viewpost() {
     <>
       <div className="viewpost-parent">
         <div className="viewpsot-header">
-          <span className="share-btn"><i className="fas fa-share"></i></span>
           <img src={post.cover} alt="" srcset="" />
         </div>
       </div>
