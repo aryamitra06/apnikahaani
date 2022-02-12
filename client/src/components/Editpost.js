@@ -8,7 +8,7 @@ const initialValues = {
   title: '',
   desc: '',
   cover: '',
-  category: 'All',
+  category: 'Uncategorized',
   username: 'aryamitra06',
   created: new Date()
 }
@@ -66,7 +66,7 @@ function Editpost() {
         <div className="viewpost-post-body">
           <input onChange={(e) => handleChange(e)} type="text" name="title" value={post.title} placeholder='Title...' />
           <select onChange={(e) => handleChange(e)} value={post.category} name="category">
-            <option>Select...</option>
+            <option value="Uncategorized">Select...</option>
             <option value="Rebirth">Rebirth</option>
             <option value="Tragedy">Tragedy</option>
             <option value="Quest">Quest</option>
