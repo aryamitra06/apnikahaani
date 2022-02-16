@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function Navbar() {
   const location = useLocation();
-  const history = useHistory();
 
   const [user, setUser] = useState('');
   const [profilepic, setProfilepic] = useState('');
@@ -19,8 +18,7 @@ function Navbar() {
   //handle logout
   const logout = () =>{
     localStorage.clear();
-    // window.location.href = '/';
-    history.push('/')
+    window.location.href = '/';
   }
   
   return (

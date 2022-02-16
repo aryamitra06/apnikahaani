@@ -3,19 +3,23 @@ import { createPost, uploadFile } from '../service/api';
 import { useHistory } from 'react-router-dom'
 import React from 'react';
 
+
 const initialValues = {
   title: '',
   desc: '',
   cover: '',
   category: 'Uncategorized',
-  username: 'aryamitra06',
+  username: localStorage.getItem('email'),
   created: new Date()
 }
 
 function Addpost() {
 
   let history = useHistory();
-
+  if(!localStorage.getItem('token')){
+    history.push('/');
+  }
+  
   const [post, setPost] = useState(initialValues);
   const [file, setFile] = useState('');
   const [image, setImage] = useState('');

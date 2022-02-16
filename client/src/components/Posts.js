@@ -18,9 +18,18 @@ function Posts() {
 
   return (
     <>
-      <div className="container add-story-parent-container">
-        <Link to="/add"><p className="addstory-btn"><i className="fas fa-plus"></i> Add Story</p></Link>
-      </div>
+        {
+        (localStorage.getItem('token')) ? (
+          <>
+          <div className="container add-story-parent-container">
+          <Link to="/add"><p className="addstory-btn"><i className="fas fa-plus"></i> Add Story</p></Link>
+          </div>
+          </>
+          ):(
+            <>
+            </>
+          )
+        }
       <div className="posts-parent-container" data-simplebar>
         {posts.map(post => (
           <Link className='link' to={`/view/${post._id}`}><Postcard category={post.category} title={post.title} author={post.username} desc={post.desc} cover ={post.cover}/></Link>

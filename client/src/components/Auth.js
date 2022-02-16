@@ -17,6 +17,9 @@ function Auth() {
         localStorage.setItem('token', token); 
         localStorage.setItem('name', profileData.name); 
         localStorage.setItem('profilepic', profileData.imageUrl);
+        localStorage.setItem('email', profileData.email);
+        
+        console.log(profileData);
         // window.location.href = '/';
         history.push('/')
     }
