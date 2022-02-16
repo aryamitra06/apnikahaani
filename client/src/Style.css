@@ -345,6 +345,14 @@ label:active{
     border: 2px solid #eb0c17;
 }
 
+/*auth*/
+.profile-pic{
+    border-radius: 100%;
+    height: 40px;
+}
+.user-name{
+    margin-right: 20px;
+}
 
 /* css media queries */
 
@@ -375,5 +383,12 @@ label:active{
     }
     .action-handle{
         justify-content: space-between;
+    }
+    .profile-pic{
+        border-radius: 100%;
+        height: 30px;
+        width: 30px;
+        margin-left: 0px;
+        margin-top: 20px;
     }
 }

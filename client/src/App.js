@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import Viewpost from "./components/Viewpost";
 import Editpost from "./components/Editpost";
 import Addpost from "./components/Addpost";
+import Auth from "./components/Auth";
 
 
 function App() {
@@ -28,6 +29,9 @@ function App() {
           </Route>
           <Route exact path="/edit/:id">
             <Editpost/>
+          </Route>
+          <Route exact path="/auth">
+            <Auth/>
           </Route>
         </Switch>
       </Router>
