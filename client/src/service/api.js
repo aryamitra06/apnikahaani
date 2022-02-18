@@ -33,3 +33,8 @@ export const deletePost = async(id) =>{
 export const uploadFile = async(data) =>{
     return await axios.post(`${url}/file/upload`, data)
 }
+
+//google auth
+export const googleAuth = async(data) =>{
+    return await axios.post(`${url}/auth`, data);
+}

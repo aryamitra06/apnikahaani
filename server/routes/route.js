@@ -90,4 +90,10 @@ router.get('/file/:filename', async(req,res)=>{
     const readStream = gfs.createReadStream(file.filename);
     readStream.pipe(res);
 })
+
+//google auth
+router.post('/auth', (req,res)=>{
+    let token = req.body.token;
+    console.log(token);
+})
 export default router;

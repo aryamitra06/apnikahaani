@@ -1,6 +1,7 @@
 import React from 'react'
 import {GoogleLogin} from 'react-google-login';
 import {useHistory} from 'react-router-dom';
+import { googleAuth } from '../service/api';
 function Auth() {
     const history = useHistory();
     const handleSubmit = () =>{
@@ -11,17 +12,25 @@ function Auth() {
     }
 
     //google auth handle
-    const googleSuccess = async (res) =>{
-        const profileData = await res.profileObj;
-        const token = await res.tokenId;
-        localStorage.setItem('token', token); 
-        localStorage.setItem('name', profileData.name); 
-        localStorage.setItem('profilepic', profileData.imageUrl);
-        localStorage.setItem('email', profileData.email);
-        
-        console.log(profileData);
+    const googleSuccess = async (googleUser) =>{
+        // const profileData = await res.profileObj;
+        // const token = await res.tokenId;
+        // localStorage.setItem('token', token); 
+        // localStorage.setItem('name', profileData.name); 
+        // localStorage.setItem('profilepic', profileData.imageUrl);
+        // localStorage.setItem('email', profileData.email);
+        // history.push('/')
         // window.location.href = '/';
-        history.push('/')
+        var id_token = googleUser.getAuthResponse().id_token;
+        console.log(id_token);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/auth');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = function() {
+        xhr.send(JSON.stringify({token: id_token}))
+        };
+        await googleAuth({token: id_token});
     }
     const googleFailure = () =>{
         console.log("Failed to login with google!");
