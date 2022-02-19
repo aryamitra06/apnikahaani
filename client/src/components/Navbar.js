@@ -25,9 +25,9 @@ function Navbar() {
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 bg-white rounded">
         <div className="container">
-          <Link className="navbar-brand" to="/">🔖ApniKahaani</Link>
+          <Link className="navbar-brand" to="/">✡️ ApniKahaani</Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <input type="checkbox"></input>
+          <span class="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
             <div className="navbar-nav">
@@ -45,9 +45,9 @@ function Navbar() {
             <div className="auth-details">
               {
                 user ? (
-                  <button type="button" className="btn btn-primary" onClick={logout}>Logout</button>
+                  <button type="button" className="btn btn-primary logout-btn" onClick={logout}>Logout</button>
                 ) : (
-                  <Link to='/auth'><button type="button" className="btn btn-primary">Login</button></Link>
+                  <Link to='/auth'><button type="button" className="btn btn-primary login-btn">Login</button></Link>
                 )}
             </div>
           </div>
