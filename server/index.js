@@ -3,12 +3,13 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import Connection from './database/db.js';
 import Router from './routes/route.js'
+import cookieParser from 'cookie-parser';
 
 const app = express();
-
+app.use(cookieParser());
 app.use(bodyParser.json({extended: true}));
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(cors());
+app.use(cors({ origin: true, credentials: true }));
 
 app.use('/', Router);
 

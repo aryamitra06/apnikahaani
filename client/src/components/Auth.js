@@ -4,17 +4,11 @@ import {useHistory} from 'react-router-dom';
 import { googleAuth } from '../service/api';
 function Auth() {
     const history = useHistory();
-    const handleSubmit = () =>{
-
-    }
-    const handleChange = () =>{
-
-    }
 
     //google auth handle
     const googleSuccess = async (googleUser) =>{
-        // const profileData = await res.profileObj;
-        // const token = await res.tokenId;
+        // const profileData = await googleUser.profileObj;
+        // const token = await googleUser.tokenId;
         // localStorage.setItem('token', token); 
         // localStorage.setItem('name', profileData.name); 
         // localStorage.setItem('profilepic', profileData.imageUrl);
@@ -22,8 +16,6 @@ function Auth() {
         // history.push('/')
         // window.location.href = '/';
         var id_token = googleUser.getAuthResponse().id_token;
-        console.log(id_token);
-
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '/auth');
         xhr.setRequestHeader('Content-Type', 'application/json');
@@ -38,49 +30,16 @@ function Auth() {
 
     return (
         <>
-            <div className="container">
-                <div className="row mt-4">
-                    <div className="col-md-5 col-sm-12 mt-4">
-                        <h3 className="mb-3">Login to your account</h3>
-                        <form method='post' onSubmit={handleSubmit}>
-                            <div className="mb-3">
-                                <input type="email" className="form-control" onChange={handleChange} name="" id="" placeholder="Username" required/>
-                            </div>
-                            <div className="mb-3">
-                                <input type="password" className="form-control" onChange={handleChange} name="" id="" placeholder="Password" required/>
-                            </div>
-                            <button type="submit" className="btn btn-primary w-100">Login</button>
-                        </form>
-                    <div className="mt-3">
+        <div className="container mt-3 d-flex justify-content-center">
                     <GoogleLogin
                     clientId="903948333203-5hlqr2q43lst7986r8oqq6c9cvqv821h.apps.googleusercontent.com"
-                    onSuccess={googleSuccess}
                     onFailure={googleFailure}
+                    onSuccess={googleSuccess}
                     cookiePolicy={'single_host_origin'}
+                    isSignedIn={true}
                     />
-                    </div>    
-                    </div>
-                    <div className="col-md-7 col-sm-12 mt-4">
-                        <h3 className="mb-3">Create an Account</h3>
-                        <form method='post' onSubmit={handleSubmit}>
-                            <div className="mb-3">
-                                <input type="email" className="form-control" onChange={handleChange} name="" id="" placeholder="Username" required/>
-                            </div>
-                            <div className="mb-3">
-                                <input type="email" className="form-control" onChange={handleChange} name="" id="" placeholder="Email" required/>
-                            </div>
-                            <div className="mb-3">
-                                <input type="password" className="form-control" onChange={handleChange} name="" id="" placeholder="Password" required/>
-                            </div>
-                            <button type="submit" className="btn btn-primary w-100">Create Account</button>
-                        </form>
-                    </div>
-
-                    <div className="col-md-6 col-sm-12">
-
-                    </div>
-                </div>
-            </div>
+        </div>
+                
         </>
     )
 }

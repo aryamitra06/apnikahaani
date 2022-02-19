@@ -4,7 +4,7 @@ const url= 'http://localhost:8000';
 
 // creating a post
 export const createPost = async (post) => {
-    return await axios.post(`${url}/add`, post);
+    return await axios.post(`${url}/add`, post, {withCredentials: true, credentials: 'include'});
 }
 
 // getting all the posts (adding param so that it can handle query after that)
@@ -36,5 +36,5 @@ export const uploadFile = async(data) =>{
 
 //google auth
 export const googleAuth = async(data) =>{
-    return await axios.post(`${url}/auth`, data);
+    return await axios.post(`${url}/auth`, data, {withCredentials: true, credentials: 'include'});
 }

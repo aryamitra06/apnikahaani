@@ -9,16 +9,16 @@ const initialValues = {
   desc: '',
   cover: '',
   category: 'Uncategorized',
-  username: localStorage.getItem('email'),
+  username: 'aryamitra123',
   created: new Date()
 }
 
 function Addpost() {
 
   let history = useHistory();
-  if(!localStorage.getItem('token')){
-    history.push('/');
-  }
+  // if(!localStorage.getItem('token')){
+  //   history.push('/');
+  // }
   
   const [post, setPost] = useState(initialValues);
   const [file, setFile] = useState('');

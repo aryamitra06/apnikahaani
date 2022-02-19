@@ -3,10 +3,53 @@ import Post from '../model/Post.js';
 import upload from '../middleware/upload.js'
 import grid from 'gridfs-stream';
 import mongoose from 'mongoose';
+import {OAuth2Client} from 'google-auth-library';
+import cookieParser from 'cookie-parser';
+
+const app = express();
+app.use(cookieParser());
+
+//google auth utils
+const CLIENT_ID = '903948333203-5hlqr2q43lst7986r8oqq6c9cvqv821h.apps.googleusercontent.com';
+const client = new OAuth2Client(CLIENT_ID);
 
 const router = express.Router();
 
-//route to fetch all the posts
+
+//google authentication
+router.post('/auth', (req,res)=>{
+    let token = req.body.token;
+    res.cookie('session-token', token);
+    res.send('Success');
+})
+
+
+//middleware for checking authentication
+function checkAuthenticated(req, res, next){
+    let token = req.cookies['session-token'];
+    console.log(token);
+    let user = {};
+    async function verify() {
+        const ticket = await client.verifyIdToken({
+            idToken: token,
+            audience: CLIENT_ID,
+        });
+        const payload = ticket.getPayload();
+        user.name = payload.name;
+        user.email = payload.email;
+        user.picture = payload.picture;
+      }
+      verify()
+      .then(()=>{
+          req.user = user;
+          next();
+      })
+      .catch(err=>{
+        res.status(401).send({error: "Invalid token"});
+    })
+}
+
+//<------route to fetch all the posts-------->
 router.get('/', async (req, res) => {
     let posts;
     let username = req.query.username;
@@ -29,7 +72,8 @@ router.get('/', async (req, res) => {
 })
 
 //route to add a post
-router.post('/add', async (req, res) => {
+router.post('/add', checkAuthenticated, async (req, res) => {
+    console.log(req.user.email);
     try {
         const post = await new Post(req.body);
         post.save();
@@ -54,9 +98,16 @@ router.put('/edit/:id', async (req, res) => {
     try {
         let post = await Post.findById(req.params.id);
         post = req.body;
-        const editPost = new Post(post);
-        await Post.updateOne({ _id: req.params.id }, editPost);
-        res.json(post);
+        console.log(post.username);
+        if(post.username.toString()===req.user.email)
+        {
+            const editPost = new Post(post);
+            await Post.updateOne({ _id: req.params.id }, editPost);
+            res.json(post);
+        }
+        else{
+            res.status(401).send("Not allowed");
+        }
     } catch (error) {
         res.status(500).json(error);
     }
@@ -91,9 +142,4 @@ router.get('/file/:filename', async(req,res)=>{
     readStream.pipe(res);
 })
 
-//google auth
-router.post('/auth', (req,res)=>{
-    let token = req.body.token;
-    console.log(token);
-})
 export default router;
