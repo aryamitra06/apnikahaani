@@ -235,7 +235,7 @@ input[type="checkbox"]:checked {
 
 
 /*Editpost and Addpost css*/
-.viewpost-post-body input:first-child{
+.viewpost-post-body .title-box{
     margin-top: 10px;
     margin-bottom: 10px;
     width: 100%;
@@ -247,7 +247,7 @@ input[type="checkbox"]:checked {
 .viewpost-post-body textarea{
     margin-top: 10px;
     width: 100%;
-    height: 250px;
+    height: 100px;
     outline: none;
     border: none;
     font-size: 19px;
@@ -351,7 +351,7 @@ label:active{
     height: 40px;
 }
 .user-name{
-    margin-right: 20px;
+    margin-right: 5px;
 }
 
 /* css media queries */

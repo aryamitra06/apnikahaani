@@ -29,7 +29,7 @@ function Navbar() {
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <input type="checkbox"></input>
           </button>
-          <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
             <div className="navbar-nav">
               {
                 user ? (
@@ -40,8 +40,6 @@ function Navbar() {
                 ):(
                   <></>
                 )}
-              <Link className="nav-link active" aria-current="page" to="/">Home</Link>
-              <Link className="nav-link active" aria-current="page" to="/about">About</Link>
             </div>
 
             <div className="auth-details">

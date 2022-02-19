@@ -7,22 +7,22 @@ import React from 'react';
 const initialValues = {
   title: '',
   desc: '',
-  cover: '',
+  cover: 'https://images.pexels.com/photos/3007370/pexels-photo-3007370.jpeg',
   category: 'Uncategorized',
-  username: localStorage.getItem('email'),
+  username: localStorage.getItem('email') ? localStorage.getItem('email').substring(0, localStorage.getItem('email').lastIndexOf("@")) : '', //stores email as an username
   created: new Date()
 }
 
 function Addpost() {
 
   let history = useHistory();
-  // if(!localStorage.getItem('token')){
-  //   history.push('/');
-  // }
-  
+  if (!localStorage.getItem('token')) {
+    history.push('/');
+  }
+
   const [post, setPost] = useState(initialValues);
   const [file, setFile] = useState('');
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState('https://images.pexels.com/photos/3007370/pexels-photo-3007370.jpeg');
 
   useEffect(() => {
     const fetchImage = async () => {
@@ -57,19 +57,17 @@ function Addpost() {
       </div>
       <div className="viewpost-child">
         <div className="viewpost-post-body">
-
-          <input onChange={(e) => handleChange(e)} type="text" name="title" value={post.title} id="title" placeholder='Title...' required />
-          <select onChange={(e) => handleChange(e)} value={post.category} name="category">
-            <option value="Uncategorized">Select...</option>
+          <select className="form-select mb-3 mt-4" onChange={(e) => handleChange(e)} value={post.category} name="category" required>
+            <option value="Uncategorized">Select Genre...</option>
             <option value="Rebirth">Rebirth</option>
             <option value="Tragedy">Tragedy</option>
             <option value="Quest">Quest</option>
             <option value="Return">Return</option>
           </select>
-          <input onChange={(e) => setFile(e.target.files[0])} type="file" />
+          <input className="form-control" onChange={(e) => setFile(e.target.files[0])} type="file" required />
+          <input onChange={(e) => handleChange(e)} className="title-box" type="text" name="title" value={post.title} id="title" placeholder='Title...' required />
           <textarea onChange={(e) => handleChange(e)} name="desc" value={post.desc} id="desc" placeholder='Description...' required></textarea>
           <button onClick={() => publishPost()}>Publish</button>
-
         </div>
       </div>
     </>

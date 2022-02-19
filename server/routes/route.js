@@ -95,7 +95,8 @@ router.put('/edit/:id', checkAuthenticated, async (req, res) => {
     try {
         let post = await Post.findById(req.params.id);
         post = req.body;
-        if(post.username.toString()===req.user.email)
+        const googleusername = req.user.email.toString().substring(0, req.user.email.toString().lastIndexOf("@"))
+        if(post.username.toString()===googleusername)
         {
             const editPost = new Post(post);
             await Post.updateOne({ _id: req.params.id }, editPost);

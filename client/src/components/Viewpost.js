@@ -35,7 +35,7 @@ function Viewpost() {
           <p className="viewpost-post-description">{post.desc}</p>
 
           {
-            post.username === localStorage.getItem('email') && localStorage.getItem('token') ? (
+            post.username === localStorage.getItem('email').substring(0, localStorage.getItem('email').lastIndexOf("@")) && localStorage.getItem('token') ? (
           <>
           <Link className='link' to={`/edit/${post._id}`}>
           <p className='edit-btn'><i className="fas fa-edit"></i> Edit</p>
@@ -45,7 +45,7 @@ function Viewpost() {
             <></>
             )}
           {
-            post.username === localStorage.getItem('email') && localStorage.getItem('token') ? (
+            post.username === localStorage.getItem('email').substring(0, localStorage.getItem('email').lastIndexOf("@")) && localStorage.getItem('token') ? (
           <>
           <p className='del-btn' onClick={() => deletePostHandle()}><i className="fas fa-trash"></i> Delete</p>
           </>

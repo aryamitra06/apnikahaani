@@ -9,12 +9,13 @@ const initialValues = {
   desc: '',
   cover: '',
   category: 'Uncategorized',
-  username: localStorage.getItem('email'),
+  username: localStorage.getItem('email') ? localStorage.getItem('email').substring(0, localStorage.getItem('email').lastIndexOf("@")) : '', //stores email as an username,
   created: new Date()
 }
 
 function Editpost() {
   const history = useHistory();
+
   const { id } = useParams();
   const [post, setPost] = useState(initialValues);
   const [file, setFile] = useState('');
@@ -55,6 +56,11 @@ function Editpost() {
     setPost({ ...post, [e.target.name]: e.target.value });
   }
 
+  if (!localStorage.getItem('token') || post.username !== localStorage.getItem('email').substring(0, localStorage.getItem('email').lastIndexOf("@"))) {
+    history.push('/');
+  }
+
+
   return (
     <>
       <div className="viewpost-parent">
@@ -64,15 +70,15 @@ function Editpost() {
       </div>
       <div className="viewpost-child">
         <div className="viewpost-post-body">
-          <input onChange={(e) => handleChange(e)} type="text" name="title" value={post.title} placeholder='Title...' />
-          <select onChange={(e) => handleChange(e)} value={post.category} name="category">
+          <select className="form-select mb-3 mt-4" onChange={(e) => handleChange(e)} value={post.category} name="category">
             <option value="Uncategorized">Select...</option>
             <option value="Rebirth">Rebirth</option>
             <option value="Tragedy">Tragedy</option>
             <option value="Quest">Quest</option>
             <option value="Return">Return</option>
           </select>
-          <input onChange={(e) => setFile(e.target.files[0])} type="file" />
+          <input className="form-control" onChange={(e) => setFile(e.target.files[0])} type="file" />
+          <input onChange={(e) => handleChange(e)} className="title-box" type="text" name="title" value={post.title} placeholder='Title...' />
           <textarea onChange={(e) => handleChange(e)} name="desc" value={post.desc} placeholder='Description...'></textarea>
           <button type="submit" onClick={() => editPostHandle()} >Save</button>
         </div>
