@@ -21,12 +21,12 @@ export const getPost = async (id) => {
 
 // editing the post
 export const editPost = async (id, post) => {
-    return await axios.put(`${url}/edit/${id}`, post)
+    return await axios.put(`${url}/edit/${id}`, post, {withCredentials: true, credentials: 'include'})
 }
 
 // deleting the post
 export const deletePost = async(id) =>{
-    await axios.delete(`${url}/delete/${id}`)
+    await axios.delete(`${url}/delete/${id}`, {withCredentials: true, credentials: 'include'})
 }
 
 //upload file handler

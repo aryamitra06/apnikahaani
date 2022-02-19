@@ -15,19 +15,9 @@ const client = new OAuth2Client(CLIENT_ID);
 
 const router = express.Router();
 
-
-//google authentication
-router.post('/auth', (req,res)=>{
-    let token = req.body.token;
-    res.cookie('session-token', token);
-    res.send('Success');
-})
-
-
 //middleware for checking authentication
 function checkAuthenticated(req, res, next){
     let token = req.cookies['session-token'];
-    console.log(token);
     let user = {};
     async function verify() {
         const ticket = await client.verifyIdToken({
@@ -48,6 +38,14 @@ function checkAuthenticated(req, res, next){
         res.status(401).send({error: "Invalid token"});
     })
 }
+
+//google authentication
+router.post('/auth', (req,res)=>{
+    let token = req.body.token;
+    res.cookie('session-token', token);
+    res.send('Success');
+})
+
 
 //<------route to fetch all the posts-------->
 router.get('/', async (req, res) => {
@@ -73,7 +71,6 @@ router.get('/', async (req, res) => {
 
 //route to add a post
 router.post('/add', checkAuthenticated, async (req, res) => {
-    console.log(req.user.email);
     try {
         const post = await new Post(req.body);
         post.save();
@@ -94,11 +91,10 @@ router.get('/view/:id', async (req, res) => {
 })
 
 //updating the post
-router.put('/edit/:id', async (req, res) => {
+router.put('/edit/:id', checkAuthenticated, async (req, res) => {
     try {
         let post = await Post.findById(req.params.id);
         post = req.body;
-        console.log(post.username);
         if(post.username.toString()===req.user.email)
         {
             const editPost = new Post(post);
@@ -109,15 +105,22 @@ router.put('/edit/:id', async (req, res) => {
             res.status(401).send("Not allowed");
         }
     } catch (error) {
-        res.status(500).json(error);
+        res.status(401).send("Not allowed");
     }
 })
 
 //deleting the post
-router.delete('/delete/:id', async (req, res) => {
-    await Post.deleteOne({ _id: req.params.id });
-    let posts = await Post.find();
-    res.json(posts);
+router.delete('/delete/:id', checkAuthenticated, async (req, res) => {
+    let post = await Post.findById(req.params.id);
+    if(post.username.toString()===req.user.email){
+        await Post.deleteOne({ _id: req.params.id });
+        let posts = await Post.find();
+        res.json(posts);
+    }
+    else{
+        res.status(401).send("Not allowed");
+    }
+
 })
 
 //router to handle upload image

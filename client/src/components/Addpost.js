@@ -9,7 +9,7 @@ const initialValues = {
   desc: '',
   cover: '',
   category: 'Uncategorized',
-  username: 'aryamitra123',
+  username: localStorage.getItem('email'),
   created: new Date()
 }
 
@@ -52,7 +52,7 @@ function Addpost() {
     <>
       <div className="viewpost-parent">
         <div className="viewpsot-header">
-          <img src={post.cover} alt="Add Cover Photo for your story..." srcset="" />
+          <img src={image} alt="Add Cover Photo for your story..." />
         </div>
       </div>
       <div className="viewpost-child">

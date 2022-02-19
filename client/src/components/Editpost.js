@@ -9,7 +9,7 @@ const initialValues = {
   desc: '',
   cover: '',
   category: 'Uncategorized',
-  username: 'aryamitra06',
+  username: localStorage.getItem('email'),
   created: new Date()
 }
 

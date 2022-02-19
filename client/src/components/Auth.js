@@ -3,18 +3,9 @@ import {GoogleLogin} from 'react-google-login';
 import {useHistory} from 'react-router-dom';
 import { googleAuth } from '../service/api';
 function Auth() {
-    const history = useHistory();
 
     //google auth handle
     const googleSuccess = async (googleUser) =>{
-        // const profileData = await googleUser.profileObj;
-        // const token = await googleUser.tokenId;
-        // localStorage.setItem('token', token); 
-        // localStorage.setItem('name', profileData.name); 
-        // localStorage.setItem('profilepic', profileData.imageUrl);
-        // localStorage.setItem('email', profileData.email);
-        // history.push('/')
-        // window.location.href = '/';
         var id_token = googleUser.getAuthResponse().id_token;
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '/auth');
@@ -23,7 +14,17 @@ function Auth() {
         xhr.send(JSON.stringify({token: id_token}))
         };
         await googleAuth({token: id_token});
+
+        //saving auth to client side local storage
+        const profileData = await googleUser.profileObj;
+        const token = await googleUser.tokenId;
+        localStorage.setItem('token', token);
+        localStorage.setItem('name', profileData.name); 
+        localStorage.setItem('profilepic', profileData.imageUrl);
+        localStorage.setItem('email', profileData.email);
+        window.location.href = '/';
     }
+    //handles if fails
     const googleFailure = () =>{
         console.log("Failed to login with google!");
     }
@@ -36,7 +37,6 @@ function Auth() {
                     onFailure={googleFailure}
                     onSuccess={googleSuccess}
                     cookiePolicy={'single_host_origin'}
-                    isSignedIn={true}
                     />
         </div>
                 
