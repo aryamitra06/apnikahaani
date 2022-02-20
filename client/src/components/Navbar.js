@@ -25,7 +25,17 @@ function Navbar() {
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 bg-white rounded">
         <div className="container">
-          <Link className="navbar-brand" to="/">✡️ ApniKahaani</Link>
+          <Link className="app-brand" to="/">ApniKahaani</Link>
+          {
+        (localStorage.getItem('token')) ? (
+          <>
+          <Link to="/add"><p className="addstory-btn"><i className="fa-solid fa-feather"></i> Create Story</p></Link>
+          </>
+          ):(
+            <>
+            </>
+          )
+        }
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
           </button>
