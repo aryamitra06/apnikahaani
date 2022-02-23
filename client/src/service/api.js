@@ -52,5 +52,5 @@ export const getComments = async(id) =>{
 
 //delete comment
 export const deleteComment = async(id) =>{
-    await axios.delete(`${url}/comment/delete/${id}`)
+    await axios.delete(`${url}/comment/delete/${id}`, {withCredentials: true, credentials: 'include'})
 }

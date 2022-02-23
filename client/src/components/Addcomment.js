@@ -14,7 +14,7 @@ function Addcomment(props) {
     const handleChange = (e) =>{
         setComment({
             ...comment,
-            name: 'aryamitra06',
+            name: localStorage.getItem('email') ? localStorage.getItem('email').substring(0, localStorage.getItem('email').lastIndexOf("@")) : '', //stores email as an username,
             postId: props.id,
             comment: e.target.value,
             profilephoto: localStorage.getItem('profilepic')

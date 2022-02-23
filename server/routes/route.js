@@ -4,7 +4,7 @@ import Comment from '../model/Comment.js';
 import upload from '../middleware/upload.js'
 import grid from 'gridfs-stream';
 import mongoose from 'mongoose';
-import {OAuth2Client} from 'google-auth-library';
+import { OAuth2Client } from 'google-auth-library';
 import cookieParser from 'cookie-parser';
 
 const app = express();
@@ -17,7 +17,7 @@ const client = new OAuth2Client(CLIENT_ID);
 const router = express.Router();
 
 //middleware for checking authentication
-function checkAuthenticated(req, res, next){
+function checkAuthenticated(req, res, next) {
     let token = req.cookies['session-token'];
     let user = {};
     async function verify() {
@@ -29,19 +29,19 @@ function checkAuthenticated(req, res, next){
         user.name = payload.name;
         user.email = payload.email;
         user.picture = payload.picture;
-      }
-      verify()
-      .then(()=>{
-          req.user = user;
-          next();
-      })
-      .catch(err=>{
-        res.status(401).send({error: "Invalid token"});
-    })
+    }
+    verify()
+        .then(() => {
+            req.user = user;
+            next();
+        })
+        .catch(err => {
+            res.status(401).send({ error: "Invalid token" });
+        })
 }
 
 //google authentication
-router.post('/auth', (req,res)=>{
+router.post('/auth', (req, res) => {
     let token = req.body.token;
     res.cookie('session-token', token);
     res.send('Success');
@@ -97,13 +97,12 @@ router.put('/edit/:id', checkAuthenticated, async (req, res) => {
         let post = await Post.findById(req.params.id);
         post = req.body;
         const googleusername = req.user.email.toString().substring(0, req.user.email.toString().lastIndexOf("@"))
-        if(post.username.toString()===googleusername)
-        {
+        if (post.username.toString() === googleusername) {
             const editPost = new Post(post);
             await Post.updateOne({ _id: req.params.id }, editPost);
             res.json(post);
         }
-        else{
+        else {
             res.status(401).send("Not allowed");
         }
     } catch (error) {
@@ -115,12 +114,12 @@ router.put('/edit/:id', checkAuthenticated, async (req, res) => {
 router.delete('/delete/:id', checkAuthenticated, async (req, res) => {
     let post = await Post.findById(req.params.id);
     const googleusername = req.user.email.toString().substring(0, req.user.email.toString().lastIndexOf("@"))
-    if(post.username.toString()===googleusername){
+    if (post.username.toString() === googleusername) {
         await Post.deleteOne({ _id: req.params.id });
         let posts = await Post.find();
         res.json(posts);
     }
-    else{
+    else {
         res.status(401).send("Not allowed");
     }
 
@@ -142,18 +141,18 @@ conn.once('open', () => {
     gfs = grid(conn.db, mongoose.mongo);
     gfs.collection('fs');
 });
-router.get('/file/:filename', async(req,res)=>{
+router.get('/file/:filename', async (req, res) => {
     const file = await gfs.files.findOne({ filename: req.params.filename });
     const readStream = gfs.createReadStream(file.filename);
     readStream.pipe(res);
 })
 
 //posting a comment
-router.post('/comment/new', async(req, res)=>{
+router.post('/comment/new', async (req, res) => {
     try {
         const comment = new Comment(req.body);
         comment.save();
-        
+
         res.json(comment);
     } catch (error) {
         console.log(error);
@@ -161,7 +160,7 @@ router.post('/comment/new', async(req, res)=>{
 })
 
 //fetching all comments
-router.get('/comments/:id', async(req, res)=> {
+router.get('/comments/:id', async (req, res) => {
     try {
         let comments = await Comment.find({ postId: req.params.id })
         res.json(comments);
@@ -171,13 +170,15 @@ router.get('/comments/:id', async(req, res)=> {
 })
 
 //deleteing a comment
-router.delete('/comment/delete/:id', async(req, res)=> {
-    try {
-        const comment = await Comment.findById(req.params.id);
+router.delete('/comment/delete/:id', checkAuthenticated, async (req, res) => {
+    const googleusername = req.user.email.toString().substring(0, req.user.email.toString().lastIndexOf("@"))
+    let comment = await Comment.findById(req.params.id);
+    if (comment.name === googleusername) {
         await comment.deleteOne();
-        res.json("deleted successfully")
-    } catch (error) {
-        console.log(error);
+        res.json("deleted successfully");
+    }
+    else {
+        res.status(401).send("Not allowed");
     }
 })
 export default router;
