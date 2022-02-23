@@ -57,7 +57,7 @@ function Editpost() {
   }
 
   if (!localStorage.getItem('token') || post.username !== localStorage.getItem('email').substring(0, localStorage.getItem('email').lastIndexOf("@"))) {
-    history.push('/');
+    history.push('/?error=notallowed');
   }
 
 

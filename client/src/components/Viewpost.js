@@ -2,6 +2,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { Link, useParams, useHistory } from 'react-router-dom';
 import { getPost, deletePost } from '../service/api';
+import Comments from './Comments';
 
 function Viewpost() {
   const history = useHistory();
@@ -14,7 +15,7 @@ function Viewpost() {
       setPost(data);
     }
     fetchData();
-  }, []);
+  }, [id]);
 
   const deletePostHandle = async () => {
     await deletePost(id);
@@ -52,10 +53,11 @@ function Viewpost() {
             ) : (
             <></>
             )}
-
-
         </div>
       </div>
+      
+           {/*comments section*/}
+           <Comments/>
     </>
   );
 }
