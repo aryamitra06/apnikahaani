@@ -11,7 +11,6 @@ function Addcomment(props) {
     }
 
     const [comment, setComment] = useState(initialValue);
-
     const handleChange = (e) =>{
         setComment({
             ...comment,
@@ -23,6 +22,7 @@ function Addcomment(props) {
     }
     const postComment = async() =>{
         await newComment(comment);
+        document.getElementById("inputcomment").value = "";
         props.setToggle(prev => !prev);
     }
   return (
@@ -32,7 +32,8 @@ function Addcomment(props) {
         <img src={localStorage.getItem('profilepic')} alt="user"/>
         <input type="text" 
         className="form-control" 
-        placeholder="What do you think about this story?" 
+        id='inputcomment'
+        placeholder="Post a comment..." 
         onChange={(e)=> handleChange(e)}/>
     </div>
     <button 

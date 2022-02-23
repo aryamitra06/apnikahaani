@@ -49,3 +49,8 @@ export const getComments = async(id) =>{
     const res = await axios.get(`${url}/comments/${id}`)
     return res.data;
 }
+
+//delete comment
+export const deleteComment = async(id) =>{
+    await axios.delete(`${url}/comment/delete/${id}`)
+}

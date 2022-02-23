@@ -21,7 +21,7 @@ function Comments(props) {
                 <h3>All Comments</h3>
                 {
                     comments && comments.map(comment => (
-                        <Comment name= {comment.name} date={comment.date} comment = {comment.comment} profilephoto={comment.profilephoto} toggle={toggle}/>
+                        <Comment name= {comment.name} date={comment.date} comment = {comment.comment} id = {comment._id} profilephoto={comment.profilephoto} setToggle = {setToggle}/>
                     )
                     )
                 }

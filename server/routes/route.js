@@ -114,7 +114,8 @@ router.put('/edit/:id', checkAuthenticated, async (req, res) => {
 //deleting the post
 router.delete('/delete/:id', checkAuthenticated, async (req, res) => {
     let post = await Post.findById(req.params.id);
-    if(post.username.toString()===req.user.email){
+    const googleusername = req.user.email.toString().substring(0, req.user.email.toString().lastIndexOf("@"))
+    if(post.username.toString()===googleusername){
         await Post.deleteOne({ _id: req.params.id });
         let posts = await Post.find();
         res.json(posts);
@@ -164,6 +165,17 @@ router.get('/comments/:id', async(req, res)=> {
     try {
         let comments = await Comment.find({ postId: req.params.id })
         res.json(comments);
+    } catch (error) {
+        console.log(error);
+    }
+})
+
+//deleteing a comment
+router.delete('/comment/delete/:id', async(req, res)=> {
+    try {
+        const comment = await Comment.findById(req.params.id);
+        await comment.deleteOne();
+        res.json("deleted successfully")
     } catch (error) {
         console.log(error);
     }

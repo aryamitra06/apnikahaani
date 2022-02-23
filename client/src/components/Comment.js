@@ -1,6 +1,12 @@
 import React from 'react'
+import { deleteComment } from '../service/api';
 
 function Comment(props) {
+
+    const deleteCommentHandle = async() =>{
+        await deleteComment(props.id);
+        props.setToggle(prev => !prev);
+    }
 
     return (
         <>
@@ -17,7 +23,7 @@ function Comment(props) {
                         </>
                     </div>
                     <div className="deletepost text-end">
-                        <button type="button" className="btn btn-danger" ><i className="fa-solid fa-trash"></i></button>
+                        <button type="button" className="btn btn-danger" onClick={()=> deleteCommentHandle()}><i className="fa-solid fa-trash"></i></button>
                     </div>
                 </div>
             </div>
