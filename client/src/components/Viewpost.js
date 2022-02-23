@@ -57,7 +57,7 @@ function Viewpost() {
       </div>
       
            {/*comments section*/}
-           <Comments/>
+           <Comments id={post._id}/>
     </>
   );
 }

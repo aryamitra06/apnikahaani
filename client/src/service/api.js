@@ -38,3 +38,8 @@ export const uploadFile = async(data) =>{
 export const googleAuth = async(data) =>{
     return await axios.post(`${url}/auth`, data, {withCredentials: true, credentials: 'include'});
 }
+
+//adding a new comment
+export const newComment = async(data) =>{
+    return await axios.post(`${url}/comment/new`, data);
+}

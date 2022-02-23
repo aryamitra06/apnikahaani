@@ -1,5 +1,6 @@
 import express from 'express';
 import Post from '../model/Post.js';
+import Comment from '../model/Comment.js';
 import upload from '../middleware/upload.js'
 import grid from 'gridfs-stream';
 import mongoose from 'mongoose';
@@ -146,4 +147,24 @@ router.get('/file/:filename', async(req,res)=>{
     readStream.pipe(res);
 })
 
+//posting a comment
+router.post('/comment/new', async(req, res)=>{
+    try {
+        const comment = new Comment(req.body);
+        comment.save();
+        res.json(comment);
+    } catch (error) {
+        console.log(error);
+    }
+})
+
+//fetching all comments
+router.get('comments/:id', async(req, res)=> {
+    try {
+        const comments = Comment.find({ postId: req.params.id })
+        res.json(comments);
+    } catch (error) {
+        console.log(error);
+    }
+})
 export default router;
