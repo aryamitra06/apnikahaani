@@ -26,7 +26,7 @@ function Viewpost() {
     <>
       <div className="viewpost-parent">
         <div className="viewpsot-header">
-          <img src={post.cover} alt="" srcset="" />
+          <img src={post.cover} alt=""/>
         </div>
       </div>
       <div className="viewpost-child">
@@ -57,7 +57,7 @@ function Viewpost() {
       </div>
       
            {/*comments section*/}
-           <Comments id={post._id}/>
+           <Comments id= {post._id}/>
     </>
   );
 }

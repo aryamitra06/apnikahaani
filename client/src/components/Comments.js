@@ -1,44 +1,33 @@
-import React, { useState } from 'react'
-import { newComment } from '../service/api';
+import React from 'react'
+import { useEffect, useState } from 'react'
+import { getComments } from '../service/api'
+import Comment from './Comment'
+import Addcomment from './Addcomment'
+
 function Comments(props) {
-
-    const initialValue = {
-        name: '',
-        postId: '',
-        date: new Date(),
-        comment: ''
-    }
-
-    const [comment, setComment] = useState(initialValue);
-
-    const handleChange = (e) =>{
-        setComment({
-            ...comment,
-            name: 'aryamitra06',
-            postId: props.id,
-            comment: e.target.value
-        })
-    }
-    const postComment = async() =>{
-        await newComment(comment);
-    }
-  return (
-    <>
-    <div className="container mt-3 mb-5">
-    <div className="input-group mb-3">
-        <img src={localStorage.getItem('profilepic')} alt="user"/>
-        <input type="text" 
-        className="form-control" 
-        placeholder="What do you think about this story?" 
-        onChange={(e)=> handleChange(e)}/>
-    </div>
-    <button 
-    className="btn btn-outline-secondary w-100" 
-    type="button"
-    onClick={()=> postComment()}>Post Comment</button>
-    </div>
-    </>
-  )
+    const [comments, setComments] = useState([])
+    const [toggle, setToggle] = useState(false)
+    useEffect(() => {
+        const getData = async () => {
+            const res = await getComments(props.id)
+            setComments(res);
+        }
+        getData();
+    }, [props.id, toggle])
+    return (
+        <>
+            <Addcomment id={props.id} setToggle = {setToggle}/>
+            <div className="container">
+                <h3>All Comments</h3>
+                {
+                    comments && comments.map(comment => (
+                        <Comment name= {comment.name} date={comment.date} comment = {comment.comment} profilephoto={comment.profilephoto} toggle={toggle}/>
+                    )
+                    )
+                }
+            </div>
+        </>
+    )
 }
 
 export default Comments

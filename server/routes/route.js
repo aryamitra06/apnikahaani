@@ -152,6 +152,7 @@ router.post('/comment/new', async(req, res)=>{
     try {
         const comment = new Comment(req.body);
         comment.save();
+        
         res.json(comment);
     } catch (error) {
         console.log(error);
@@ -159,9 +160,9 @@ router.post('/comment/new', async(req, res)=>{
 })
 
 //fetching all comments
-router.get('comments/:id', async(req, res)=> {
+router.get('/comments/:id', async(req, res)=> {
     try {
-        const comments = Comment.find({ postId: req.params.id })
+        let comments = await Comment.find({ postId: req.params.id })
         res.json(comments);
     } catch (error) {
         console.log(error);

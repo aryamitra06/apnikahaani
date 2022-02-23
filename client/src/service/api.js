@@ -43,3 +43,9 @@ export const googleAuth = async(data) =>{
 export const newComment = async(data) =>{
     return await axios.post(`${url}/comment/new`, data);
 }
+
+// geeting comments
+export const getComments = async(id) =>{
+    const res = await axios.get(`${url}/comments/${id}`)
+    return res.data;
+}
