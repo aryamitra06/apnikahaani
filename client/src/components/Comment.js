@@ -3,7 +3,7 @@ import { deleteComment } from '../service/api';
 
 function Comment(props) {
 
-    const deleteCommentHandle = async() =>{
+    const deleteCommentHandle = async () => {
         await deleteComment(props.id);
         props.setToggle(prev => !prev);
     }
@@ -22,9 +22,16 @@ function Comment(props) {
                             <p className='mx-3'>{props.comment}</p>
                         </>
                     </div>
-                    <div className="deletepost text-end">
-                        <button type="button" className="btn btn-danger" onClick={()=> deleteCommentHandle()}><i className="fa-solid fa-trash"></i></button>
-                    </div>
+                    {
+                        (props.name === localStorage.getItem('email').substring(0, localStorage.getItem('email').lastIndexOf("@"))) ? (
+                            <>
+                                <div className="deletepost text-end">
+                                    <button type="button" className="btn btn-danger" onClick={() => deleteCommentHandle()}><i className="fa-solid fa-trash"></i></button>
+                                </div>
+                            </>
+                        ) : (
+                            <></>
+                        )}
                 </div>
             </div>
         </>
