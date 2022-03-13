@@ -23,7 +23,7 @@ function Comment(props) {
                         </>
                     </div>
                     {
-                        (props.name === localStorage.getItem('email').substring(0, localStorage.getItem('email').lastIndexOf("@"))) ? (
+                        (props.email === localStorage.getItem('email')) ? (
                             <>
                                 <div className="deletepost text-end">
                                     <button type="button" className="btn btn-danger" onClick={() => deleteCommentHandle()}><i className="fa-solid fa-trash"></i></button>

@@ -3,7 +3,7 @@ import { newComment } from '../service/api';
 function Addcomment(props) {
     
     const initialValue = {
-        name: '',
+        email: '',
         profilephoto: '',
         postId: '',
         date: new Date(),
@@ -14,7 +14,7 @@ function Addcomment(props) {
     const handleChange = (e) =>{
         setComment({
             ...comment,
-            name: localStorage.getItem('email') ? localStorage.getItem('email').substring(0, localStorage.getItem('email').lastIndexOf("@")) : '', //stores email as an username,
+            email: localStorage.getItem('email'),
             postId: props.id,
             comment: e.target.value,
             profilephoto: localStorage.getItem('profilepic')

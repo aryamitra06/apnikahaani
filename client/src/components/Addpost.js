@@ -9,7 +9,7 @@ const initialValues = {
   desc: '',
   cover: 'https://images.pexels.com/photos/3007370/pexels-photo-3007370.jpeg',
   category: 'Uncategorized',
-  username: localStorage.getItem('email') ? localStorage.getItem('email').substring(0, localStorage.getItem('email').lastIndexOf("@")) : '', //stores email as an username
+  email: localStorage.getItem('email'),
   created: new Date()
 }
 

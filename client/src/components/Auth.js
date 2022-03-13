@@ -1,6 +1,5 @@
 import React from 'react'
 import {GoogleLogin} from 'react-google-login';
-import {useHistory} from 'react-router-dom';
 import { googleAuth } from '../service/api';
 function Auth() {
 

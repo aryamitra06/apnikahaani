@@ -9,7 +9,7 @@ const initialValues = {
   desc: '',
   cover: '',
   category: 'Uncategorized',
-  username: localStorage.getItem('email') ? localStorage.getItem('email').substring(0, localStorage.getItem('email').lastIndexOf("@")) : '', //stores email as an username,
+  email: localStorage.getItem('email'),
   created: new Date()
 }
 
@@ -56,7 +56,7 @@ function Editpost() {
     setPost({ ...post, [e.target.name]: e.target.value });
   }
 
-  if (!localStorage.getItem('token') || post.username !== localStorage.getItem('email').substring(0, localStorage.getItem('email').lastIndexOf("@"))) {
+  if (!localStorage.getItem('token') || post.email !== localStorage.getItem('email')) {
     history.push('/?error=notallowed');
   }
 

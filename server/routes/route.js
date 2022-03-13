@@ -51,12 +51,12 @@ router.post('/auth', (req, res) => {
 //<------route to fetch all the posts-------->
 router.get('/', async (req, res) => {
     let posts;
-    let username = req.query.username;
+    let email = req.query.email;
     let category = req.query.category;
     try {
         // handles ?username = ...
-        if (username) {
-            posts = await Post.find({ username: username })
+        if (email) {
+            posts = await Post.find({ email: email })
         }
         else if (category) {
             posts = await Post.find({ category: category })
@@ -95,9 +95,7 @@ router.get('/view/:id', async (req, res) => {
 router.put('/edit/:id', checkAuthenticated, async (req, res) => {
     try {
         let post = await Post.findById(req.params.id);
-        post = req.body;
-        const googleusername = req.user.email.toString().substring(0, req.user.email.toString().lastIndexOf("@"))
-        if (post.username.toString() === googleusername) {
+        if (req.body.email === req.user.email) {
             const editPost = new Post(post);
             await Post.updateOne({ _id: req.params.id }, editPost);
             res.json(post);
@@ -113,8 +111,7 @@ router.put('/edit/:id', checkAuthenticated, async (req, res) => {
 //deleting the post
 router.delete('/delete/:id', checkAuthenticated, async (req, res) => {
     let post = await Post.findById(req.params.id);
-    const googleusername = req.user.email.toString().substring(0, req.user.email.toString().lastIndexOf("@"))
-    if (post.username.toString() === googleusername) {
+    if (post.email === req.user.email) {
         await Post.deleteOne({ _id: req.params.id });
         let posts = await Post.find();
         res.json(posts);
@@ -171,9 +168,8 @@ router.get('/comments/:id', async (req, res) => {
 
 //deleteing a comment
 router.delete('/comment/delete/:id', checkAuthenticated, async (req, res) => {
-    const googleusername = req.user.email.toString().substring(0, req.user.email.toString().lastIndexOf("@"))
     let comment = await Comment.findById(req.params.id);
-    if (comment.name === googleusername) {
+    if (comment.email === req.user.email) {
         await comment.deleteOne();
         res.json("deleted successfully");
     }
