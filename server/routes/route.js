@@ -75,7 +75,7 @@ router.post('/add', checkAuthenticated, async (req, res) => {
     try {
         const post = await new Post(req.body);
         post.save();
-        res.json(post);
+        res.status(200).json({"msg": "Success"});
     } catch (error) {
         res.status(500).json(error);
     }
@@ -95,8 +95,8 @@ router.get('/view/:id', async (req, res) => {
 router.put('/edit/:id', checkAuthenticated, async (req, res) => {
     try {
         let post = await Post.findById(req.params.id);
-        if (req.body.email === req.user.email) {
-            const editPost = new Post(post);
+        if (post.email === req.user.email) {
+            const editPost = new Post(req.body);
             await Post.updateOne({ _id: req.params.id }, editPost);
             res.json(post);
         }
