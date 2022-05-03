@@ -1,6 +1,5 @@
 import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import About from "./components/About";
 import './Style.css'
 import Home from "./components/Home";
 import Viewpost from "./components/Viewpost";
@@ -8,18 +7,23 @@ import Editpost from "./components/Editpost";
 import Addpost from "./components/Addpost";
 import Auth from "./components/Auth";
 
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
+
 
 function App() {
   return (
-    <>
+    <ThemeProvider theme={darkTheme}>
       <Router>
         <Navbar />
         <Switch>
         <Route exact path="/">
             <Home />
-          </Route>
-          <Route exact path="/about">
-            <About />
           </Route>
           <Route exact path="/add">
             <Addpost/>
@@ -35,8 +39,7 @@ function App() {
           </Route>
         </Switch>
       </Router>
-
-    </>
+      </ThemeProvider>
   );
 }
 

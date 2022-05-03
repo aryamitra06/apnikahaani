@@ -1,68 +1,128 @@
-import React, {useState, useEffect} from 'react';
-import { Link, useLocation } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
+
+//mui 
+import AppBar from '@mui/material/AppBar';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem'
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import Avatar from '@mui/material/Avatar';
 
 function Navbar() {
-  const location = useLocation();
 
   const [user, setUser] = useState('');
   const [profilepic, setProfilepic] = useState('');
 
   useEffect(() => {
     const fetchData = () => {
-     setUser(localStorage.getItem('name'));
-     setProfilepic(localStorage.getItem('profilepic'))
+      setUser(localStorage.getItem('name'));
+      setProfilepic(localStorage.getItem('profilepic'))
     }
     fetchData();
-  }, [location])
+  }, [])
 
   //handle logout
-  const logout = () =>{
+  const logout = () => {
     localStorage.clear();
     window.location.href = '/';
   }
-  
+
+  const [anchorEl_categories, setAnchorEl_categories] = useState(null);
+  const [anchorEl_profile, setAnchorEl_profile] = useState(null);
+
+  const open_categories = Boolean(anchorEl_categories);
+  const open_profile = Boolean(anchorEl_profile);
+
+  const handleOpenCategories = (event) => {
+    setAnchorEl_categories(event.currentTarget);
+  };
+
+  const handleClose_categories = () => {
+    setAnchorEl_categories(null);
+  };
+
+  const handleOpenProfile = (event) => {
+    setAnchorEl_profile(event.currentTarget);
+  };
+
+  const handleClose_profile = () => {
+    setAnchorEl_profile(null);
+  };
+
+
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 bg-white rounded">
-        <div className="container">
-          <Link className="app-brand" to="/">ApniKahaani</Link>
-          {
-        (localStorage.getItem('token')) ? (
-          <>
-          <Link to="/add"><p className="addstory-btn"><i className="fa-solid fa-feather"></i> Create Story</p></Link>
-          </>
-          ):(
-            <>
-            </>
-          )
-        }
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-            <div className="navbar-nav">
-              {
-                user ? (
-                  <>
-                  <img src={profilepic} alt="profile photo" className='profile-pic' />
-                  <Link className="nav-link active user-name" aria-current="page" to="/">{user}</Link>
-                  </>
-                ):(
-                  <></>
-                )}
-            </div>
 
-            <div className="auth-details">
-              {
-                user ? (
-                  <button type="button" className="btn btn-primary logout-btn" onClick={logout}>Logout</button>
-                ) : (
-                  <Link to='/auth'><button type="button" className="btn btn-primary login-btn">Login</button></Link>
-                )}
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon onClick={handleOpenCategories} />
+            </IconButton>
+            <Menu
+              anchorEl={anchorEl_categories}
+              open={open_categories}
+              onClose={handleClose_categories}
+              MenuListProps={{
+                'aria-labelledby': 'basic-button',
+              }}
+            >
+              <Link to="/" style={{ color: 'inherit', textDecoration: 'none' }} onClick={handleClose_categories}><MenuItem>All</MenuItem></Link>
+              <Link to="/?category=Rebirth" style={{ color: 'inherit', textDecoration: 'none' }} onClick={handleClose_categories}><MenuItem>Rebirth</MenuItem></Link>
+              <Link to="/?category=Tragedy" style={{ color: 'inherit', textDecoration: 'none' }} onClick={handleClose_categories}><MenuItem>Tragedy</MenuItem></Link>
+              <Link to="/?category=Quest" style={{ color: 'inherit', textDecoration: 'none' }} onClick={handleClose_categories}><MenuItem>Quest</MenuItem></Link>
+              <Link to="/?category=Return" style={{ color: 'inherit', textDecoration: 'none' }} onClick={handleClose_categories}><MenuItem>Return</MenuItem></Link>
+            </Menu>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Link to='/' style={{ color: 'inherit', textDecoration: 'none' }}>ApniKahaani</Link>
+            </Typography>
+            
+            {
+              (localStorage.getItem('token')) ? (
+                <Box marginRight={1}>
+                  <Link to='/add' style={{ color: 'inherit', textDecoration: 'none' }}><Button variant="outlined">Add</Button></Link>
+                </Box>
+              ) : (
+                <>
+                </>
+              )
+            }
+            {
+              user ? (
+                <>
+                  <IconButton sx={{ p: 0 }} onClick={handleOpenProfile}>
+                    <Avatar alt="Profile avatar" src={profilepic} />
+                  </IconButton>
+                  <Menu
+                    anchorEl={anchorEl_profile}
+                    open={open_profile}
+                    onClose={handleClose_profile}
+                    MenuListProps={{
+                      'aria-labelledby': 'basic-button',
+                    }}
+                  >
+                    <MenuItem disabled>{user}</MenuItem>
+                    <MenuItem onClick={logout}>Logout</MenuItem>
+                  </Menu>
+                </>
+              ) : (
+                <Link to='/auth' style={{ color: 'inherit', textDecoration: 'none' }}><Button color="inherit">Login</Button></Link>
+              )
+            }
+          </Toolbar>
+        </AppBar>
+      </Box>
     </>
   );
 }
