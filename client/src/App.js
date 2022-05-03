@@ -1,12 +1,11 @@
 import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import './Style.css'
 import Home from "./components/Home";
 import Viewpost from "./components/Viewpost";
 import Editpost from "./components/Editpost";
 import Addpost from "./components/Addpost";
 import Auth from "./components/Auth";
-
+import '../src/Additional Styles/style.css'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 const darkTheme = createTheme({

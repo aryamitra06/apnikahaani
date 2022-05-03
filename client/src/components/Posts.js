@@ -3,6 +3,9 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { getAllPosts } from '../service/api';
 import Postcard from './Postcard';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Container from '@mui/material/Container';
 
 function Posts() {
   const [posts, setPosts] = useState([]);
@@ -18,12 +21,17 @@ function Posts() {
 
   return (
     <>
-      <div className="posts-parent-container">
+        <Grid 
+        container 
+        sx={{ bgcolor: '#0A1929'}} 
+        justifyContent='center'
+        >
         {posts.map(post => (
-          <Link className='link' to={`/view/${post._id}`}><Postcard category={post.category} title={post.title} author={post.email} desc={post.desc} cover ={post.cover}/></Link>
-        ))}
-
-      </div>
+        <Grid item sm={10} xs={12} md={4} lg={4} xl={2}>
+        <Link style={{ color: 'inherit', textDecoration: 'none' }} to={`/view/${post._id}`}><Postcard category={post.category} title={post.title} author={post.email} desc={post.desc} cover={post.cover} /></Link>
+        </Grid>
+      ))}
+        </Grid>
     </>
   );
 }
