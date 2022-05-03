@@ -3,9 +3,7 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { getAllPosts } from '../service/api';
 import Postcard from './Postcard';
-import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import Container from '@mui/material/Container';
 
 function Posts() {
   const [posts, setPosts] = useState([]);

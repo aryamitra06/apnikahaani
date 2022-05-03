@@ -1,6 +1,7 @@
 import React from 'react'
 import {GoogleLogin} from 'react-google-login';
 import { googleAuth } from '../service/api';
+import Grid from '@mui/material/Grid';
 function Auth() {
 
     //google auth handle
@@ -30,14 +31,19 @@ function Auth() {
 
     return (
         <>
-        <div className="container mt-3 d-flex justify-content-center">
+        <Grid
+                container 
+                sx={{ bgcolor: '#0A1929'}} 
+                justifyContent='center'
+                marginTop={5}
+        >
                     <GoogleLogin
                     clientId="903948333203-5hlqr2q43lst7986r8oqq6c9cvqv821h.apps.googleusercontent.com"
                     onFailure={googleFailure}
                     onSuccess={googleSuccess}
                     cookiePolicy={'single_host_origin'}
                     />
-        </div>
+        </Grid>
                 
         </>
     )

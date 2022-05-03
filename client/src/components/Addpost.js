@@ -2,12 +2,26 @@ import { useState, useEffect } from 'react';
 import { createPost, uploadFile } from '../service/api';
 import { useHistory } from 'react-router-dom'
 import React from 'react';
-
+import { styled } from '@mui/material/styles';
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import IconButton from '@mui/material/IconButton';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 const initialValues = {
   title: '',
   desc: '',
-  cover: 'https://images.pexels.com/photos/3007370/pexels-photo-3007370.jpeg',
+  cover: 'https://images.pexels.com/photos/33545/sunrise-phu-quoc-island-ocean.jpg',
   category: 'Uncategorized',
   email: localStorage.getItem('email'),
   created: new Date()
@@ -22,7 +36,7 @@ function Addpost() {
 
   const [post, setPost] = useState(initialValues);
   const [file, setFile] = useState('');
-  const [image, setImage] = useState('https://images.pexels.com/photos/3007370/pexels-photo-3007370.jpeg');
+  const [image, setImage] = useState('https://images.pexels.com/photos/33545/sunrise-phu-quoc-island-ocean.jpg');
 
   useEffect(() => {
     const fetchImage = async () => {
@@ -48,28 +62,79 @@ function Addpost() {
     history.push('/');
   }
 
+  const Input = styled('input')({
+    display: 'none',
+  });
+
   return (
     <>
-      <div className="viewpost-parent">
-        <div className="viewpsot-header">
-          <img src={image} alt="Add Cover Photo for your story..." />
-        </div>
-      </div>
-      <div className="viewpost-child">
-        <div className="viewpost-post-body">
-          <select className="form-select mb-3 mt-4" onChange={(e) => handleChange(e)} value={post.category} name="category" required>
-            <option value="Uncategorized">Select Genre...</option>
-            <option value="Rebirth">Rebirth</option>
-            <option value="Tragedy">Tragedy</option>
-            <option value="Quest">Quest</option>
-            <option value="Return">Return</option>
-          </select>
-          <input className="form-control" onChange={(e) => setFile(e.target.files[0])} type="file" required />
-          <input onChange={(e) => handleChange(e)} className="title-box" type="text" name="title" value={post.title} id="title" placeholder='Title...' required />
-          <textarea onChange={(e) => handleChange(e)} name="desc" value={post.desc} id="desc" placeholder='Description...' required></textarea>
-          <button onClick={() => publishPost()}>Publish</button>
-        </div>
-      </div>
+      <Grid
+        container
+        sx={{ marginTop: 15 }}
+        justifyContent='center'
+        alignItems='center'
+      >
+        <Grid item sm={10} xs={11} md={10} lg={6} xl={6}>
+          <Card>
+            <CardMedia
+              component="img"
+              height="300"
+              image={image}
+              alt="green iguana"
+            />
+            <CardContent>
+              <Grid container justifyContent='space-between' alignItems='center'>
+                <Grid>
+                  <Typography gutterBottom variant="h5">
+                    Add Post
+                  </Typography>
+                </Grid>
+                <Grid sx={{ position: 'relative', top: -70 }}>
+                  <label htmlFor="icon-button-file">
+                    <Input accept="image/*" id="icon-button-file" type="file" onChange={(e) => setFile(e.target.files[0])}/>
+                    <IconButton color="primary" aria-label="upload picture" component="span">
+                      <PhotoCamera />
+                    </IconButton>
+                  </label>
+                </Grid>
+              </Grid>
+              <TextField fullWidth label="Title" variant="outlined" sx={{ marginBottom: 2 }} type="text" name="title" value={post.title} onChange={(e) => handleChange(e)} />
+              <FormControl fullWidth>
+                <InputLabel id="select-label">Category</InputLabel>
+                <Select
+                  id="select-label"
+                  label="Category"
+                  onChange={(e) => handleChange(e)}
+                  value={post.category}
+                  name="category"
+                >
+                  <MenuItem value="Uncategorized">
+                    <em>Uncategorized</em>
+                  </MenuItem>
+                  <MenuItem value="Rebirth">Rebirth</MenuItem>
+                  <MenuItem value="Tragedy">Tragedy</MenuItem>
+                  <MenuItem value="Quest">Quest</MenuItem>
+                  <MenuItem value="Return">Return</MenuItem>
+                </Select>
+              </FormControl>
+              <TextField
+                sx={{ marginTop: 2 }}
+                label="Description"
+                multiline
+                rows={4}
+                fullWidth
+                type='text'
+                name="desc"
+                value={post.desc}
+                onChange={(e) => handleChange(e)}
+              />
+            </CardContent>
+            <CardActions>
+              <Button onClick={() => publishPost()} size="medium" disabled={post.title.length===0 || post.desc.length===0}>Post</Button>
+            </CardActions>
+          </Card>
+        </Grid>
+      </Grid>
     </>
   );
 }

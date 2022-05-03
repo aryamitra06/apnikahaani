@@ -4,6 +4,8 @@ import { Link, useParams, useHistory } from 'react-router-dom';
 import { getPost, deletePost } from '../service/api';
 import Comments from './Comments';
 
+
+
 function Viewpost() {
   const history = useHistory();
   const { id } = useParams();
@@ -24,7 +26,8 @@ function Viewpost() {
 
   return (
     <>
-      <div className="viewpost-parent">
+
+      {/* <div className="viewpost-parent">
         <div className="viewpsot-header">
           <img src={post.cover} alt=""/>
         </div>
@@ -56,8 +59,14 @@ function Viewpost() {
         </div>
       </div>
       
-           {/*comments section*/}
-           <Comments id= {post._id}/>
+           {
+             localStorage.getItem('token') ? (
+               <Comments id= {post._id}/>
+             ):(
+               <>
+               </>
+             )
+           } */}
     </>
   );
 }
