@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { newComment } from '../service/api';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button'
+import { useHistory } from 'react-router-dom'
 
 function Addcomment(props) {
+    let history = useHistory();
 
     const initialValue = {
         email: '',
@@ -15,8 +17,8 @@ function Addcomment(props) {
         date: new Date(),
         comment: ''
     }
-
     const [comment, setComment] = useState(initialValue);
+
     const handleChange = (e) => {
         setComment({
             ...comment,
@@ -26,12 +28,12 @@ function Addcomment(props) {
             profilephoto: localStorage.getItem('profilepic')
         })
     }
+    
+    
     const postComment = async () => {
         await newComment(comment);
         props.setToggle(prev => !prev);
-        document.getElementById("textfield").value = "";
     }
-
     
     return (
         <>
@@ -39,11 +41,12 @@ function Addcomment(props) {
                 <IconButton sx={{ p: 0 }}>
                     <Avatar alt="Avatar" src={localStorage.getItem('profilepic')} />
                 </IconButton>
-                <TextField focused type="text" label="Comment..." size="small" onChange={(e) => handleChange(e)} id="textfield" />
+                <TextField name="comment" type="text" label="Comment..." size="small" onChange={(e) => handleChange(e)} />
                 <Button variant="outlined" size="medium" onClick={() => postComment()} disabled={comment.comment.length === 0}>Post</Button>
             </Stack>
         </>
     )
 }
+
 
 export default Addcomment

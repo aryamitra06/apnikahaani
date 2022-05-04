@@ -21,7 +21,7 @@ function Comments(props) {
         <>
             <Addcomment id={props.id} setToggle={setToggle} />
             <Typography variant="h6" gutterBottom color='white' mt={2}>
-                All Comments
+                All Comments ({comments.length})
             </Typography>
             {
                 (comments.length === 0) ? (

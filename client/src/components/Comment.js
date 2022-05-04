@@ -25,11 +25,14 @@ function Comment(props) {
                     <CardContent sx={{ display: 'flex', width: '100%' }}>
                         <Grid container alignItems='center' sx={{ width: '100%' }}>
                             <Grid item sm={9} xs={9} md={12} lg={9} xl={9}>
-                                <Typography component="div" variant="h5">
+                                <Typography variant="h6">
                                     {props.comment}
                                 </Typography>
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                <Typography variant="subtitle2" color="text.secondary">
                                     {props.email}
+                                </Typography>
+                                <Typography variant="subtitle2" color="text.secondary">
+                                {new Date(props.date).toDateString()}
                                 </Typography>
                             </Grid>
                             {
@@ -50,27 +53,6 @@ function Comment(props) {
                     </CardContent>
                 </Box>
             </Card>
-            {/* <div class="card mt-4 mb-4">
-
-                    <div className="details" style={{ width: "90%" }}>
-                        <>
-                            <h6 className='mx-3'>{props.name}</h6>
-                            <p className='mx-3'>{new Date(props.date).toDateString()}</p>
-                            <p className='mx-3'>{props.comment}</p>
-                        </>
-                    </div>
-                    {
-                        (props.email === localStorage.getItem('email')) ? (
-                            <>
-                                <div className="deletepost text-end">
-                                    <button type="button" className="btn btn-danger" onClick={() => deleteCommentHandle()}><i className="fa-solid fa-trash"></i></button>
-                                </div>
-                            </>
-                        ) : (
-                            <></>
-                        )}
-                </div>
-            </div> */}
         </>
     )
 }
