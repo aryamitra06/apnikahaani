@@ -1,5 +1,13 @@
 import React from 'react'
 import { deleteComment } from '../service/api';
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Avatar from '@mui/material/Avatar';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 function Comment(props) {
 
@@ -8,13 +16,42 @@ function Comment(props) {
         props.setToggle(prev => !prev);
     }
 
+
     return (
         <>
-            <div class="card mt-4 mb-4">
-                <div class="card-body d-flex">
-                    <div className="profilephoto">
-                        <img src={props.profilephoto} className="rounded-circle" alt="comment user" />
-                    </div>
+            <Card sx={{ display: 'flex', width: '97%', marginBottom: 2, alignItems: 'center' }}>
+                <Avatar sx={{ marginLeft: 2, height: '60px', width: '60px' }} alt="Avatar" src={props.profilephoto} />
+                <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+                    <CardContent sx={{ display: 'flex', width: '100%' }}>
+                        <Grid container justifyContent='space-between' sx={{ width: '100%' }}>
+                            <Grid item sm={8} xs={8} md={12} lg={9} xl={9}>
+                                <Typography component="div" variant="h5">
+                                    {props.comment}
+                                </Typography>
+                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                    {props.email}
+                                </Typography>
+                            </Grid>
+                            {
+                                (props.email === localStorage.getItem('email')) ? (
+                                    <>
+                                        <Grid item sm={3} xs={3} md={12} lg={2} xl={2} marginRight='7px'>
+                                            <IconButton aria-label="delete" onClick={() => deleteCommentHandle()}>
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        </Grid>
+                                    </>
+                                ) : (
+                                    <>
+                                    </>
+                                )
+                            }
+                        </Grid>
+                    </CardContent>
+                </Box>
+            </Card>
+            {/* <div class="card mt-4 mb-4">
+
                     <div className="details" style={{ width: "90%" }}>
                         <>
                             <h6 className='mx-3'>{props.name}</h6>
@@ -33,7 +70,7 @@ function Comment(props) {
                             <></>
                         )}
                 </div>
-            </div>
+            </div> */}
         </>
     )
 }

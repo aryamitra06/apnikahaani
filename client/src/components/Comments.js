@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { getComments } from '../service/api'
 import Comment from './Comment'
 import Addcomment from './Addcomment'
+import Typography from '@mui/material/Typography';
 
 function Comments(props) {
     const [comments, setComments] = useState([])
@@ -16,16 +17,18 @@ function Comments(props) {
     }, [props.id, toggle])
     return (
         <>
-            <Addcomment id={props.id} setToggle = {setToggle}/>
-            <div className="container">
-                <h3>All Comments</h3>
+            <Addcomment id={props.id} setToggle={setToggle} />
+                <Typography variant="h6" gutterBottom color='white' mt={2}>
+                    All Comments
+                </Typography>
+                <div className="allcomments-div">
                 {
                     comments && comments.map(comment => (
-                        <Comment email= {comment.email} date={comment.date} comment = {comment.comment} id = {comment._id} profilephoto={comment.profilephoto} setToggle = {setToggle}/>
+                        <Comment email={comment.email} date={comment.date} comment={comment.comment} id={comment._id} profilephoto={comment.profilephoto} setToggle={setToggle} />
                     )
                     )
                 }
-            </div>
+                </div>
         </>
     )
 }

@@ -1,7 +1,13 @@
 import React, { useState } from 'react'
 import { newComment } from '../service/api';
+import Avatar from '@mui/material/Avatar';
+import IconButton from '@mui/material/IconButton';
+import TextField from '@mui/material/TextField';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button'
+
 function Addcomment(props) {
-    
+
     const initialValue = {
         email: '',
         profilephoto: '',
@@ -11,7 +17,7 @@ function Addcomment(props) {
     }
 
     const [comment, setComment] = useState(initialValue);
-    const handleChange = (e) =>{
+    const handleChange = (e) => {
         setComment({
             ...comment,
             email: localStorage.getItem('email'),
@@ -20,29 +26,21 @@ function Addcomment(props) {
             profilephoto: localStorage.getItem('profilepic')
         })
     }
-    const postComment = async() =>{
+    const postComment = async () => {
         await newComment(comment);
-        document.getElementById("inputcomment").value = "";
         props.setToggle(prev => !prev);
     }
-  return (
-    <>
-    <div className="container mt-3 mb-4">
-    <div className="input-group mb-3">
-        <img src={localStorage.getItem('profilepic')} alt="user"/>
-        <input type="text" 
-        className="form-control" 
-        id='inputcomment'
-        placeholder="Post a comment..." 
-        onChange={(e)=> handleChange(e)}/>
-    </div>
-    <button 
-    className="btn btn-outline-secondary w-100" 
-    type="button"
-    onClick={()=> postComment()}>Post Comment</button>
-    </div>
-    </>
-  )
+    return (
+        <>
+            <Stack direction="row" spacing={1}>
+                <IconButton sx={{ p: 0 }}>
+                    <Avatar alt="Avatar" src={localStorage.getItem('profilepic')} />
+                </IconButton>
+                <TextField type="text" label="Comment..." size="small" onChange={(e) => handleChange(e)} />
+                <Button variant="outlined" size="medium" onClick={() => postComment()} disabled={comment.comment.length === 0}>Post</Button>
+            </Stack>
+        </>
+    )
 }
 
 export default Addcomment

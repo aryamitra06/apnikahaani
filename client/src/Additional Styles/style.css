@@ -1,5 +1,11 @@
 body{
     margin: 0%;
     padding: 0%;
-    background: #0A1929;
+    background: #171818;
+}
+.allcomments-div{
+    height: 360px;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: auto;
 }

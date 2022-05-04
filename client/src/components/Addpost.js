@@ -72,7 +72,6 @@ function Addpost() {
         container
         sx={{ marginTop: 15 }}
         justifyContent='center'
-        alignItems='center'
       >
         <Grid item sm={10} xs={11} md={10} lg={6} xl={6}>
           <Card>
@@ -98,8 +97,8 @@ function Addpost() {
                   </label>
                 </Grid>
               </Grid>
-              <TextField fullWidth label="Title" variant="outlined" sx={{ marginBottom: 2 }} type="text" name="title" value={post.title} onChange={(e) => handleChange(e)} />
-              <FormControl fullWidth>
+              <TextField fullWidth label="Title" variant="outlined" sx={{ marginBottom: 2 }} type="text" name="title" value={post.title} onChange={(e) => handleChange(e)} required/>
+              <FormControl fullWidth required>
                 <InputLabel id="select-label">Category</InputLabel>
                 <Select
                   id="select-label"
@@ -127,6 +126,7 @@ function Addpost() {
                 name="desc"
                 value={post.desc}
                 onChange={(e) => handleChange(e)}
+                required
               />
             </CardContent>
             <CardActions>

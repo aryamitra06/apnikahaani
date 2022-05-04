@@ -33,7 +33,6 @@ function Auth() {
         <>
         <Grid
                 container 
-                sx={{ bgcolor: '#0A1929'}} 
                 justifyContent='center'
                 marginTop={5}
         >

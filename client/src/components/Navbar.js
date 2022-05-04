@@ -26,11 +26,7 @@ function Navbar() {
     fetchData();
   }, [])
 
-  //handle logout
-  const logout = () => {
-    localStorage.clear();
-    window.location.href = '/';
-  }
+
 
   const [anchorEl_categories, setAnchorEl_categories] = useState(null);
   const [anchorEl_profile, setAnchorEl_profile] = useState(null);
@@ -54,6 +50,12 @@ function Navbar() {
     setAnchorEl_profile(null);
   };
 
+  //handle logout
+  const logout = () => {
+    localStorage.clear();
+    window.location.href = '/';
+    setAnchorEl_profile(null);
+  }
 
   return (
     <>
@@ -85,9 +87,9 @@ function Navbar() {
               <Link to="/?category=Return" style={{ color: 'inherit', textDecoration: 'none' }} onClick={handleClose_categories}><MenuItem>Return</MenuItem></Link>
             </Menu>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Link to='/' style={{ color: 'inherit', textDecoration: 'none' }}>ApniKahaani</Link>
+              <Link to='/' style={{ color: 'inherit', textDecoration: 'none' }}>ApniKahaani</Link>
             </Typography>
-            
+
             {
               (localStorage.getItem('token')) ? (
                 <Box marginRight={1}>
@@ -113,6 +115,7 @@ function Navbar() {
                     }}
                   >
                     <MenuItem disabled>{user}</MenuItem>
+                    <Link onClick={handleClose_profile} style={{ color: 'inherit', textDecoration: 'none' }} to={`/?email=${localStorage.getItem('email')}`}><MenuItem>My Posts</MenuItem></Link>
                     <MenuItem onClick={logout}>Logout</MenuItem>
                   </Menu>
                 </>

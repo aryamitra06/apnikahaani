@@ -4,6 +4,21 @@ import { Link, useParams, useHistory } from 'react-router-dom';
 import { getPost, deletePost } from '../service/api';
 import Comments from './Comments';
 
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Chip from '@mui/material/Chip';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 
 function Viewpost() {
@@ -24,49 +39,93 @@ function Viewpost() {
     history.push('/');
   }
 
+  //alert dialog
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <>
+      <Grid container sx={{ marginTop: 10}} justifyContent='center' alignItems='center' spacing={3}>
+        <Grid item sm={11} xs={11} md={7} lg={7} xl={7}>
+          <Card>
+            <CardMedia
+              component="img"
+              height="300"
+              image={post.cover}
+              alt="green iguana"
+            />
+            <CardContent>
+              <Grid container justifyContent='space-between' alignItems='center'>
+                <Grid>
+                  <Typography gutterBottom variant="h5">
+                    {post.title}
+                  </Typography>
+                </Grid>
+                <Grid sx={{ position: 'relative', top: -70 }}>
+                  <Chip label={post.category} color="primary" />
+                </Grid>
+              </Grid>
+              <Typography variant="body2" color="primary">
+                By <Link style={{ textDecoration: 'none', color: 'inherit' }} to={`/?email=${post.email}`}><b>{post.email}</b></Link> at {new Date(post.created).toDateString()}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {post.desc}
+              </Typography>
+            </CardContent>
+            <CardActions>
+              {
+                localStorage.getItem('token') && (post.email === localStorage.getItem('email')) ? (
+                  <>
+                    <Link style={{ textDecoration: 'none', color: 'inherit', marginRight: '7px' }} to={`/edit/${post._id}`}><Button variant="outlined" startIcon={<EditIcon />}>Edit</Button></Link>
+                    <Button onClick={handleClickOpen} variant="outlined" color="error" startIcon={<DeleteIcon />}>Delete</Button>
+                  </>
+                ) : (
+                  <>
+                  </>
+                )
+              }
 
-      {/* <div className="viewpost-parent">
-        <div className="viewpsot-header">
-          <img src={post.cover} alt=""/>
-        </div>
-      </div>
-      <div className="viewpost-child">
-        <div className="viewpost-post-body">
-          <p className="viewpost-post-title">{post.title}</p>
-          <p className="viewpost-post-author-and-post-date">By <Link className='link' to={`/?email=${post.email}`}>{post.email}</Link> at {new Date(post.created).toDateString()}</p>
-          <p className="viewpost-post-description">{post.desc}</p>
+            </CardActions>
+          </Card>
+        </Grid>
+        <Grid item sm={11} xs={11} md={3} lg={3} xl={3}>
+          {
+            localStorage.getItem('token') ? (
+              <Comments id={post._id} />
+            ) : (
+              <>
+              </>
+            )
+          }
+        </Grid>
+      </Grid>
 
-          {
-            localStorage.getItem('token') && (post.email === localStorage.getItem('email')) ? (
-          <>
-          <Link className='link' to={`/edit/${post._id}`}>
-          <p className='edit-btn'><i className="fas fa-edit"></i> Edit</p>
-          </Link>
-          </>
-            ) : (
-            <></>
-            )}
-          {
-            localStorage.getItem('token') && (post.email === localStorage.getItem('email')) ? (
-          <>
-          <p className='del-btn' onClick={() => deletePostHandle()}><i className="fas fa-trash"></i> Delete</p>
-          </>
-            ) : (
-            <></>
-            )}
-        </div>
-      </div>
-      
-           {
-             localStorage.getItem('token') ? (
-               <Comments id= {post._id}/>
-             ):(
-               <>
-               </>
-             )
-           } */}
+      <Dialog
+        open={open}
+        onClose={handleClose}
+      >
+        <DialogTitle>
+          Delete
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete this post?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button color='error' onClick={() => deletePostHandle()} autoFocus>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }
