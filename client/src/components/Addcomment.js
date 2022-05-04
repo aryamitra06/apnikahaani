@@ -29,14 +29,17 @@ function Addcomment(props) {
     const postComment = async () => {
         await newComment(comment);
         props.setToggle(prev => !prev);
+        document.getElementById("textfield").value = "";
     }
+
+    
     return (
         <>
             <Stack direction="row" spacing={1}>
                 <IconButton sx={{ p: 0 }}>
                     <Avatar alt="Avatar" src={localStorage.getItem('profilepic')} />
                 </IconButton>
-                <TextField type="text" label="Comment..." size="small" onChange={(e) => handleChange(e)} />
+                <TextField focused type="text" label="Comment..." size="small" onChange={(e) => handleChange(e)} id="textfield" />
                 <Button variant="outlined" size="medium" onClick={() => postComment()} disabled={comment.comment.length === 0}>Post</Button>
             </Stack>
         </>

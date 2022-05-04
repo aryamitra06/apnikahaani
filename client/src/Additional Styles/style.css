@@ -3,9 +3,3 @@ body{
     padding: 0%;
     background: #171818;
 }
-.allcomments-div{
-    height: 360px;
-    width: 100%;
-    overflow-y: auto;
-    overflow-x: auto;
-}

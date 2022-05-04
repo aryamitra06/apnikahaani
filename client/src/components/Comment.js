@@ -19,12 +19,12 @@ function Comment(props) {
 
     return (
         <>
-            <Card sx={{ display: 'flex', width: '97%', marginBottom: 2, alignItems: 'center' }}>
+            <Card sx={{ display: 'flex', width: '97%', marginBottom: 2, alignItems: 'center', justifyContent: 'center' }}>
                 <Avatar sx={{ marginLeft: 2, height: '60px', width: '60px' }} alt="Avatar" src={props.profilephoto} />
                 <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
                     <CardContent sx={{ display: 'flex', width: '100%' }}>
-                        <Grid container justifyContent='space-between' sx={{ width: '100%' }}>
-                            <Grid item sm={8} xs={8} md={12} lg={9} xl={9}>
+                        <Grid container alignItems='center' sx={{ width: '100%' }}>
+                            <Grid item sm={9} xs={9} md={12} lg={9} xl={9}>
                                 <Typography component="div" variant="h5">
                                     {props.comment}
                                 </Typography>
@@ -35,7 +35,7 @@ function Comment(props) {
                             {
                                 (props.email === localStorage.getItem('email')) ? (
                                     <>
-                                        <Grid item sm={3} xs={3} md={12} lg={2} xl={2} marginRight='7px'>
+                                        <Grid item sm={3} xs={3} md={12} lg={3} xl={3}>
                                             <IconButton aria-label="delete" onClick={() => deleteCommentHandle()}>
                                                 <DeleteIcon />
                                             </IconButton>
