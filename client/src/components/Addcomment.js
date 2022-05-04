@@ -6,36 +6,13 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button'
 
-const initialState = {
-    email: '',
-    profilephoto: '',
-    postId: '',
-    date: new Date(),
-    comment: ''
-}
+
 function Addcomment(props) {
-    // const [comment, setComment] = useState(initialValue);
 
-    // const handleChange = (e) => {
-    //     setComment({
-    //         ...comment,
-    //         email: localStorage.getItem('email'),
-    //         postId: props.id,
-    //         comment: e.target.value,
-    //         profilephoto: localStorage.getItem('profilepic')
-    //     })
-    // }
-    
-    
-    // const postComment = async () => {
-    //     await newComment(comment);
-    //     props.setToggle(prev => !prev);
-    // }
+    const [{ comment },setState] = useState({comment: ''});
 
-    const [{ email, profilephoto, postId, date, comment },setState] = useState(initialState);
-
-    const clearState = () => {
-        setState({ ...initialState });
+    const clearField = () => {
+        setState({ ...{comment: ''} });
       };
     
     const onChange = (e) => {
@@ -48,9 +25,8 @@ function Addcomment(props) {
         await newComment({email: localStorage.getItem('email'), postId: props.id, date: new Date(), comment: comment, profilephoto: localStorage.getItem('profilepic')});
         props.setToggle(prev => !prev);
 
-        console.log(comment);
         setTimeout(() => {
-          clearState();
+          clearField();
         }, 1000);
       };
 
