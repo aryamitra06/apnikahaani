@@ -9,7 +9,7 @@ import Button from '@mui/material/Button'
 
 function Addcomment(props) {
 
-    const [{ comment },setState] = useState({comment: ''});
+    const [state,setState] = useState({comment: ''});
 
     const clearField = () => {
         setState({ ...{comment: ''} });
@@ -22,7 +22,7 @@ function Addcomment(props) {
     
       const handleSubmit =  async (e) => {
         e.preventDefault();
-        await newComment({email: localStorage.getItem('email'), postId: props.id, date: new Date(), comment: comment, profilephoto: localStorage.getItem('profilepic')});
+        await newComment({email: localStorage.getItem('email'), postId: props.id, date: new Date(), comment: state.comment, profilephoto: localStorage.getItem('profilepic')});
         props.setToggle(prev => !prev);
 
         setTimeout(() => {
@@ -38,7 +38,7 @@ function Addcomment(props) {
                 <IconButton sx={{ p: 0 }}>
                     <Avatar alt="Avatar" src={localStorage.getItem('profilepic')} />
                 </IconButton>
-                <TextField type="text" label="Comment..." size="small" value={comment} name="comment" onChange={onChange} />
+                <TextField type="text" label="Comment..." size="small" name="comment" value={state.comment} onChange={onChange} />
                 <Button type='submit' variant="outlined" size="medium">Post</Button>
             </Stack>
         </form>
