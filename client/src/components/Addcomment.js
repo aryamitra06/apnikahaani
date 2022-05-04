@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { newComment } from '../service/api';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
