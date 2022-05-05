@@ -77,11 +77,11 @@ router.post('/add', checkAuthenticated, async (req, res) => {
         const post = await new Post(req.body);
         const threshold = 0.9;
         toxicity.load(threshold).then(model=> {
-            const sentences = [req.body.title];
+            const sentences = [req.body.title + req.body.desc];
             model.classify(sentences).then(predictions => {
                 let result = predictions[1].results; 
-                if(JSON.stringify(result).includes("true") === true){
-                    res.status(500).json({"msg": "toxic post!"});
+                if(JSON.stringify(result).includes("false") === false){
+                    res.status(500).json({"error": "toxic post detected! You cannot post it to the community!"});
                 }
                 else if(JSON.stringify(result).includes("false") === true){
                     post.save();
