@@ -6,6 +6,7 @@ import grid from 'gridfs-stream';
 import mongoose from 'mongoose';
 import { OAuth2Client } from 'google-auth-library';
 import cookieParser from 'cookie-parser';
+import toxicity from '@tensorflow-models/toxicity';
 
 const app = express();
 app.use(cookieParser());
@@ -47,24 +48,24 @@ router.post('/auth', (req, res) => {
     res.send('Success');
 })
 
-
 //<------route to fetch all the posts-------->
 router.get('/', async (req, res) => {
     let posts;
     let email = req.query.email;
     let category = req.query.category;
     try {
-        // handles ?username = ...
-        if (email) {
-            posts = await Post.find({ email: email })
-        }
-        else if (category) {
-            posts = await Post.find({ category: category })
-        }
-        else {
-            posts = await Post.find();
-        }
-        res.json(posts);
+
+                // handles ?username = ...
+                if (email) {
+                    posts = await Post.find({ email: email })
+                }
+                else if (category) {
+                    posts = await Post.find({ category: category })
+                }
+                else {
+                    posts = await Post.find();
+                }
+                res.json(posts);
     } catch (error) {
         res.status(500).json(error);
     }
@@ -74,8 +75,20 @@ router.get('/', async (req, res) => {
 router.post('/add', checkAuthenticated, async (req, res) => {
     try {
         const post = await new Post(req.body);
-        post.save();
-        res.status(200).json({"msg": "Success"});
+        const threshold = 0.9;
+        toxicity.load(threshold).then(model=> {
+            const sentences = [req.body.title];
+            model.classify(sentences).then(predictions => {
+                let result = predictions[1].results; 
+                if(JSON.stringify(result).includes("true") === true){
+                    res.status(500).json({"msg": "toxic post!"});
+                }
+                else if(JSON.stringify(result).includes("false") === true){
+                    post.save();
+                    res.status(200).json({"msg": "Success"});   
+                }
+            })
+        })
     } catch (error) {
         res.status(500).json(error);
     }
