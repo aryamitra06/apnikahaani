@@ -8,7 +8,7 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
+import LoadingButton from '@mui/lab/LoadingButton';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
@@ -43,8 +43,11 @@ function Addpost() {
   const [file, setFile] = useState('');
   const [image, setImage] = useState('https://images.pexels.com/photos/33545/sunrise-phu-quoc-island-ocean.jpg');
   const [open, setOpen] = useState(false);
+  const [msg, setmsg] = useState("");
+  const [type, settype] = useState("");
+  const [loading, setloading] = useState(false);
 
-  const handleClose = (event, reason) => {
+  const handleClose = (reason) => {
     if (reason === 'clickaway') {
       return;
     }
@@ -71,12 +74,21 @@ function Addpost() {
   }
 
   const publishPost = async () => {
+    setloading(true)
     try {
       await createPost(post);
-      history.push('/');
+      setOpen(true);
+      setmsg("Posted");
+      settype("success");
+      setTimeout(() => {
+        history.push('/');
+      }, 2000)
       
     } catch (err) {
       setOpen(true);
+      setmsg("Toxicity detected, try again!");
+      settype("error");
+      setloading(false)
     }
   }
 
@@ -148,12 +160,12 @@ function Addpost() {
               />
             </CardContent>
             <CardActions>
-              <Button onClick={() => publishPost()} size="medium" disabled={post.title.length===0 || post.desc.length===0}>Post</Button>
+              <LoadingButton fullWidth variant="outlined" onClick={() => publishPost()} size="medium" disabled={post.title.length===0 || post.desc.length===0} loading={loading}>Post</LoadingButton>
             </CardActions>
           </Card>
         </Grid>
       </Grid>
-      <AppAlert type="error" msg="Toxicity detected, try again." open={open} handleClose={handleClose} />
+      <AppAlert type={type} msg={msg} open={open} handleClose={handleClose} />
     </>
   );
 }
