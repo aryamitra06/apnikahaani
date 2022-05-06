@@ -18,6 +18,11 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
+import AppAlert from './AppAlert';
+
+
+
+
 const initialValues = {
   title: '',
   desc: '',
@@ -37,7 +42,15 @@ function Addpost() {
   const [post, setPost] = useState(initialValues);
   const [file, setFile] = useState('');
   const [image, setImage] = useState('https://images.pexels.com/photos/33545/sunrise-phu-quoc-island-ocean.jpg');
+  const [open, setOpen] = useState(false);
 
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
+  
   useEffect(() => {
     const fetchImage = async () => {
       if (file) {
@@ -58,8 +71,13 @@ function Addpost() {
   }
 
   const publishPost = async () => {
-    await createPost(post);
-    history.push('/');
+    try {
+      await createPost(post);
+      history.push('/');
+      
+    } catch (err) {
+      setOpen(true);
+    }
   }
 
   const Input = styled('input')({
@@ -135,6 +153,7 @@ function Addpost() {
           </Card>
         </Grid>
       </Grid>
+      <AppAlert type="error" msg="Toxicity detected, try again." open={open} handleClose={handleClose} />
     </>
   );
 }

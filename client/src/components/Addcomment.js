@@ -38,8 +38,8 @@ function Addcomment(props) {
                 <IconButton sx={{ p: 0 }}>
                     <Avatar alt="Avatar" src={localStorage.getItem('profilepic')} />
                 </IconButton>
-                <TextField type="text" label="Comment..." size="small" name="comment" value={state.comment} onChange={onChange} />
-                <Button type='submit' variant="outlined" size="medium">Post</Button>
+                <TextField  fullWidth type="text" label="Comment..." size="small" name="comment" value={state.comment} onChange={onChange} />
+                <Button type='submit' variant="outlined" size="medium" disabled={state.comment.length===0}>Post</Button>
             </Stack>
         </form>
         </>

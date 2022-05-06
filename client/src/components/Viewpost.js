@@ -20,6 +20,34 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
+import {
+  EmailShareButton,
+  FacebookIcon,
+  FacebookShareButton,
+  HatenaShareButton,
+  InstapaperShareButton,
+  LineShareButton,
+  LinkedinShareButton,
+  LivejournalShareButton,
+  MailruShareButton,
+  OKShareButton,
+  PinterestShareButton,
+  PocketShareButton,
+  RedditShareButton,
+  TelegramShareButton,
+  TumblrShareButton,
+  TwitterShareButton,
+  ViberShareButton,
+  VKShareButton,
+  WhatsappShareButton,
+  WorkplaceShareButton,
+  FacebookShareCount, 
+  WhatsappIcon,
+  TwitterIcon,
+  FacebookMessengerShareButton,
+  FacebookMessengerIcon
+} from "react-share";
+
 
 function Viewpost() {
   const history = useHistory();
@@ -50,6 +78,7 @@ function Viewpost() {
     setOpen(false);
   };
 
+  const url = window.location.href;
   return (
     <>
       <Grid container sx={{ marginTop: 10}} justifyContent='center' alignItems='center' spacing={3}>
@@ -68,7 +97,19 @@ function Viewpost() {
                     {post.title}
                   </Typography>
                 </Grid>
-                <Grid sx={{ position: 'relative', top: -70 }}>
+                <Grid sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', top: -70, gap: '7px' }}>
+                  <WhatsappShareButton url={url}>
+                    <WhatsappIcon size={32} round={true}/>
+                  </WhatsappShareButton>
+                  <FacebookShareButton url={url} >
+                    <FacebookIcon size={32} round={true}/>
+                  </FacebookShareButton>
+                  <TwitterShareButton url={url} >
+                    <TwitterIcon size={32} round={true}/>
+                  </TwitterShareButton>
+                  <FacebookMessengerShareButton url={url} >
+                    <FacebookMessengerIcon size={32} round={true}/>
+                  </FacebookMessengerShareButton>
                   <Chip label={post.category} color="primary" />
                 </Grid>
               </Grid>
