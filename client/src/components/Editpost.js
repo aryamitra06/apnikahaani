@@ -9,7 +9,7 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
+import LoadingButton from '@mui/lab/LoadingButton';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
@@ -18,6 +18,8 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+
+import AppAlert from './AppAlert';
 
   const Input = styled('input')({
     display: 'none',
@@ -38,6 +40,17 @@ import Select from '@mui/material/Select';
     const [post, setPost] = useState(initialValues);
     const [file, setFile] = useState('');
     const [image, setImage] = useState('');
+    const [open, setOpen] = useState(false);
+    const [msg, setmsg] = useState("");
+    const [type, settype] = useState("");
+    const [loading, setloading] = useState(false);
+
+    const handleClose = (reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+      setOpen(false);
+    };
   
     //getting form details from post
     useEffect(() => {
@@ -66,8 +79,21 @@ import Select from '@mui/material/Select';
   
     //button click to submit updated form
     const editPostHandle = async () => {
-      await editPost(id, post);
-      history.push(`/view/${id}`);
+      setloading(true)
+      try {
+        await editPost(id, post);
+        setOpen(true);
+        setmsg("Updated");
+        settype("success");
+        setTimeout(() => {
+          history.push(`/view/${id}`);
+        }, 2000)
+      } catch (error) {
+        setOpen(true);
+        setmsg("Toxicity detected, try again!");
+        settype("error");
+        setloading(false)
+      }
     }
   
     const handleChange = (e) => {
@@ -142,35 +168,12 @@ import Select from '@mui/material/Select';
               />
             </CardContent>
             <CardActions>
-              <Button fullWidth onClick={() => editPostHandle()} size="medium" disabled={post.title.length === 0 || post.desc.length === 0}>Save</Button>
+              <LoadingButton fullWidth onClick={() => editPostHandle()} size="medium" disabled={post.title.length === 0 || post.desc.length === 0} loading={loading} loadingIndicator="Updating...">Save</LoadingButton>
             </CardActions>
           </Card>
         </Grid>
       </Grid>
-
-
-
-
-      {/* <div className="viewpost-parent">
-        <div className="viewpsot-header">
-          <img src={post.cover} />
-        </div>
-      </div>
-      <div className="viewpost-child">
-        <div className="viewpost-post-body">
-          <select className="form-select mb-3 mt-4" onChange={(e) => handleChange(e)} value={post.category} name="category">
-            <option value="Uncategorized">Select...</option>
-            <option value="Rebirth">Rebirth</option>
-            <option value="Tragedy">Tragedy</option>
-            <option value="Quest">Quest</option>
-            <option value="Return">Return</option>
-          </select>
-          <input className="form-control" onChange={(e) => setFile(e.target.files[0])} type="file" />
-          <input onChange={(e) => handleChange(e)} className="title-box" type="text" name="title" value={post.title} placeholder='Title...' />
-          <textarea onChange={(e) => handleChange(e)} name="desc" value={post.desc} placeholder='Description...'></textarea>
-          <button type="submit" onClick={() => editPostHandle()} >Save</button>
-        </div>
-      </div> */}
+      <AppAlert type={type} msg={msg} open={open} handleClose={handleClose} />
     </>
   );
 }
