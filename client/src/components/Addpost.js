@@ -160,7 +160,7 @@ function Addpost() {
               />
             </CardContent>
             <CardActions>
-              <LoadingButton fullWidth variant="outlined" onClick={() => publishPost()} size="medium" disabled={post.title.length===0 || post.desc.length===0} loading={loading}>Post</LoadingButton>
+              <LoadingButton fullWidth onClick={() => publishPost()} size="medium" disabled={post.title.length===0 || post.desc.length===0} loading={loading} loadingIndicator="Posting...">Post</LoadingButton>
             </CardActions>
           </Card>
         </Grid>

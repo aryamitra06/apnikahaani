@@ -142,7 +142,7 @@ import Select from '@mui/material/Select';
               />
             </CardContent>
             <CardActions>
-              <Button onClick={() => editPostHandle()} size="medium" disabled={post.title.length === 0 || post.desc.length === 0}>Save</Button>
+              <Button fullWidth onClick={() => editPostHandle()} size="medium" disabled={post.title.length === 0 || post.desc.length === 0}>Save</Button>
             </CardActions>
           </Card>
         </Grid>

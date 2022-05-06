@@ -109,9 +109,22 @@ router.put('/edit/:id', checkAuthenticated, async (req, res) => {
     try {
         let post = await Post.findById(req.params.id);
         if (post.email === req.user.email) {
-            const editPost = new Post(req.body);
-            await Post.updateOne({ _id: req.params.id }, editPost);
-            res.json(post);
+            const threshold = 0.9;
+            const editPost = await new Post(req.body);
+            toxicity.load(threshold).then(model=> {
+                const sentences = [editPost.title + editPost.desc];
+                console.log(sentences);
+                model.classify(sentences).then(predictions => {
+                    let result = predictions[1].results; 
+                    if(JSON.stringify(result).includes("false") === false){
+                        res.status(500).json({"error": "toxic post detected! You cannot post it to the community!"});
+                    }
+                    else if(JSON.stringify(result).includes("false") === true){
+                        Post.updateOne({ _id: req.params.id }, editPost);
+                        res.status(200).json({"msg":"success"});
+                    }
+                })
+            })
         }
         else {
             res.status(401).send("Not allowed");
