@@ -117,7 +117,6 @@ router.put('/edit/:id', checkAuthenticated, async (req, res) => {
             }
             toxicity.load(threshold).then(model=> {
                 const sentences = [editPost.title + editPost.desc];
-                console.log(sentences);
                 model.classify(sentences).then(predictions => {
                     let result = predictions[1].results; 
                     if(JSON.stringify(result).includes("false") === false){
@@ -176,12 +175,23 @@ router.get('/file/:filename', async (req, res) => {
 //posting a comment
 router.post('/comment/new', async (req, res) => {
     try {
-        const comment = new Comment(req.body);
-        comment.save();
-
-        res.json(comment);
+        const comment = await new Comment(req.body);
+        const threshold = 0.9;
+        toxicity.load(threshold).then(model=> {
+            const sentences = [req.body.comment];
+            model.classify(sentences).then(predictions => {
+                let result = predictions[1].results; 
+                if(JSON.stringify(result).includes("false") === false){
+                    res.status(500).json({"error": "toxic post detected! You cannot post it to the community!"});
+                }
+                else if(JSON.stringify(result).includes("false") === true){
+                    comment.save();
+                    res.status(200).json({"msg": "Success"});   
+                }
+            })
+        })
     } catch (error) {
-        console.log(error);
+        res.status(500).json(error);
     }
 })
 

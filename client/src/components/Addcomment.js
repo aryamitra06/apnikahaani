@@ -4,12 +4,24 @@ import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button'
+import LoadingButton from '@mui/lab/LoadingButton';
 
+import AppAlert from './AppAlert';
 
 function Addcomment(props) {
 
     const [state,setState] = useState({comment: ''});
+    const [open, setOpen] = useState(false);
+    const [msg, setmsg] = useState("");
+    const [type, settype] = useState("");
+    const [loading, setloading] = useState(false);
+
+    const handleClose = (reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+      setOpen(false);
+    };
 
     const clearField = () => {
         setState({ ...{comment: ''} });
@@ -22,12 +34,26 @@ function Addcomment(props) {
     
       const handleSubmit =  async (e) => {
         e.preventDefault();
-        await newComment({email: localStorage.getItem('email'), postId: props.id, date: new Date(), comment: state.comment, profilephoto: localStorage.getItem('profilepic')});
-        props.setToggle(prev => !prev);
-
-        setTimeout(() => {
-          clearField();
-        }, 1000);
+        setloading(true)
+        try {
+          await newComment({email: localStorage.getItem('email'), postId: props.id, date: new Date(), comment: state.comment, profilephoto: localStorage.getItem('profilepic')});
+          props.setToggle(prev => !prev);
+          setOpen(true);
+          setmsg("Posted");
+          settype("success");
+          setTimeout(() => {
+            clearField();
+            setloading(false)
+          }, 1000);
+        } catch (error) {
+          setOpen(true);
+          setmsg("Toxicity detected, try again!");
+          settype("error");
+          setTimeout(() => {
+            clearField();
+            setloading(false)
+          }, 1000);
+        }
       };
 
     
@@ -39,9 +65,10 @@ function Addcomment(props) {
                     <Avatar alt="Avatar" src={localStorage.getItem('profilepic')} />
                 </IconButton>
                 <TextField  fullWidth type="text" label="Comment..." size="small" name="comment" value={state.comment} onChange={onChange} />
-                <Button type='submit' variant="outlined" size="medium" disabled={state.comment.length===0}>Post</Button>
+                <LoadingButton type='submit' variant="outlined" size="medium" disabled={state.comment.length===0} loading={loading}>Post</LoadingButton>
             </Stack>
         </form>
+        <AppAlert type={type} msg={msg} open={open} handleClose={handleClose} />
         </>
     )
 }
