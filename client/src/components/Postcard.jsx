@@ -13,7 +13,7 @@ function Postcard(props) {
       <CardActionArea>
         <CardMedia
           component="img"
-          height="140"
+          height={{ xs: '100px', sm: '100px', md: '100px' }}
           image={props.cover}
           alt="post cover"
         />
