@@ -64,8 +64,13 @@ function Viewpost() {
   const url = window.location.href;
   return (
     <>
-      <Grid container sx={{ marginTop: 10}} justifyContent='center' alignItems='center' spacing={3}>
-        <Grid item sm={11} xs={11} md={7} lg={7} xl={7}>
+      <Grid
+        container
+        justifyContent='center'
+        alignItems='center'
+        flexDirection='column'
+      >
+        <Grid item xs={11} sm={9} md={7} lg={6} xl={5} sx={{ width: '100%', marginBottom: 3 }}>
           <Card>
             <CardMedia
               component="img"
@@ -82,16 +87,16 @@ function Viewpost() {
                 </Grid>
                 <Grid sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', top: -70, gap: '7px' }}>
                   <WhatsappShareButton url={url}>
-                    <WhatsappIcon size={32} round={true}/>
+                    <WhatsappIcon size={32} round={true} />
                   </WhatsappShareButton>
                   <FacebookShareButton url={url} >
-                    <FacebookIcon size={32} round={true}/>
+                    <FacebookIcon size={32} round={true} />
                   </FacebookShareButton>
                   <TwitterShareButton url={url} >
-                    <TwitterIcon size={32} round={true}/>
+                    <TwitterIcon size={32} round={true} />
                   </TwitterShareButton>
                   <FacebookMessengerShareButton url={url} >
-                    <FacebookMessengerIcon size={32} round={true}/>
+                    <FacebookMessengerIcon size={32} round={true} />
                   </FacebookMessengerShareButton>
                   <Chip label={post.category} color="primary" />
                 </Grid>
@@ -119,7 +124,7 @@ function Viewpost() {
             </CardActions>
           </Card>
         </Grid>
-        <Grid item sm={11} xs={11} md={3} lg={3} xl={3}>
+        <Grid item xs={11} sm={9} md={7} lg={6} xl={5} sx={{width: '100%'}}>
           {
             localStorage.getItem('token') ? (
               <Comments id={post._id} />

@@ -45,7 +45,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   });
 
 export default function EditDialog(props) {
-    const history = useHistory();
     const id = props.id;
     const [post, setPost] = useState(initialValues);
     const [file, setFile] = useState('');
@@ -122,7 +121,6 @@ export default function EditDialog(props) {
         TransitionComponent={Transition}
         keepMounted
         onClose={props.handleClose}
-        aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle sx={{backgroundColor: '#1E1E1E'}}>Edit Post</DialogTitle>
         <DialogContent sx={{backgroundColor: '#1E1E1E'}}>
@@ -141,9 +139,6 @@ export default function EditDialog(props) {
             <CardContent>
               <Grid container justifyContent='space-between' alignItems='center'>
                 <Grid>
-                  <Typography gutterBottom variant="h5" marginBottom={3}>
-                    Edit Post
-                  </Typography>
                 </Grid>
                 <Grid sx={{ position: 'relative', top: -70 }}>
                   <label htmlFor="icon-button-file">

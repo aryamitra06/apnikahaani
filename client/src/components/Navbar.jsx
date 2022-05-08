@@ -60,8 +60,8 @@ function Navbar() {
   return (
     <>
 
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
+      <Box sx={{ flexGrow: 1, marginBottom: 10 }}>
+        <AppBar position="fixed">
           <Toolbar>
             <IconButton
               size="large"

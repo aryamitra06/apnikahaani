@@ -24,7 +24,7 @@ function Comment(props) {
                 <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
                     <CardContent sx={{ display: 'flex', width: '100%' }}>
                         <Grid container alignItems='center' sx={{ width: '100%' }}>
-                            <Grid item sm={9} xs={9} md={12} lg={9} xl={9}>
+                            <Grid item sm={10} xs={9} md={10} lg={10} xl={10}>
                                 <Typography variant="h6">
                                     {props.comment}
                                 </Typography>
@@ -38,9 +38,9 @@ function Comment(props) {
                             {
                                 (props.email === localStorage.getItem('email')) ? (
                                     <>
-                                        <Grid item sm={3} xs={3} md={12} lg={3} xl={3}>
-                                            <IconButton aria-label="delete" onClick={() => deleteCommentHandle()}>
-                                                <DeleteIcon />
+                                        <Grid item sm={1} xs={1} md={1} lg={1} xl={1}>
+                                            <IconButton color='error' aria-label="delete" onClick={() => deleteCommentHandle()}>
+                                                <DeleteIcon/>
                                             </IconButton>
                                         </Grid>
                                     </>
