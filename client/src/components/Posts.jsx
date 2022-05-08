@@ -9,6 +9,7 @@ import Alert from '@mui/material/Alert';
 function Posts() {
   const [posts, setPosts] = useState([]);
   const { search } = useLocation();
+  const [toggle, setToggle] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -16,7 +17,7 @@ function Posts() {
       setPosts(data);
     }
     fetchData();
-  }, [search]);
+  }, [search, toggle]);
 
   if (posts.length === 0)
     return (
@@ -33,10 +34,12 @@ function Posts() {
       <Grid
         container
         justifyContent='center'
+        alignItems='center'
+        flexDirection='column'
       >
         {posts.map(post => (
-          <Grid item sm={10} xs={12} md={4} lg={4} xl={2}>
-            <Link style={{ color: 'inherit', textDecoration: 'none' }} to={`/view/${post._id}`}><Postcard category={post.category} title={post.title} author={post.email} desc={post.desc} cover={post.cover} /></Link>
+          <Grid item xs={11} sm={9} md={7} lg={6} xl={5} sx={{width: '100%'}}>
+            <Postcard category={post.category} id={post._id} title={post.title} author={post.email} desc={post.desc} cover={post.cover} profilephoto={post.profilephoto} created={post.created} toggle={toggle} setToggle={setToggle}/>
           </Grid>
         ))}
       </Grid>

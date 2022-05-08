@@ -21,6 +21,10 @@ const PostSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    profilephoto:{
+        type: String,
+        required: true
+    },
     created: {
         type: Date
     }

@@ -29,6 +29,7 @@ const initialValues = {
   cover: 'https://images.pexels.com/photos/33545/sunrise-phu-quoc-island-ocean.jpg',
   category: 'Uncategorized',
   email: localStorage.getItem('email'),
+  profilephoto: localStorage.getItem('profilepic'),
   created: new Date()
 }
 
