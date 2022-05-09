@@ -16,7 +16,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-
+import toast from 'react-hot-toast';
 
 
 
@@ -61,6 +61,7 @@ function AddPostHome(props) {
     setloading(true)
     try {
       await createPost(post);
+      toast.success('Post successful')
       props.setToggle(prev => !prev);
       setPost({
         title: '',
@@ -75,6 +76,7 @@ function AddPostHome(props) {
       
     } catch (err) {
       setloading(false)
+      toast.error('Something went wrong')
     }
   }
 

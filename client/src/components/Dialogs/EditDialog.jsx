@@ -2,22 +2,17 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Grow from '@mui/material/Grow';
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { getPost, editPost, uploadFile } from '../../service/api';
-import { useHistory } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import LoadingButton from '@mui/lab/LoadingButton';
-import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
@@ -25,6 +20,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import toast from 'react-hot-toast';
 
 const Input = styled('input')({
     display: 'none',
@@ -48,17 +44,7 @@ export default function EditDialog(props) {
     const [post, setPost] = useState(initialValues);
     const [file, setFile] = useState('');
     const [image, setImage] = useState('');
-    const [open, setOpen] = useState(false);
-    const [msg, setmsg] = useState("");
-    const [type, settype] = useState("");
     const [loading, setloading] = useState(false);
-
-    const handleClose = (reason) => {
-      if (reason === 'clickaway') {
-        return;
-      }
-      setOpen(false);
-    };
   
     //getting form details from post
     useEffect(() => {
@@ -90,18 +76,13 @@ export default function EditDialog(props) {
       setloading(true)
       try {
         await editPost(id, post);
-        setOpen(true);
-        setmsg("Updated");
-        settype("success");
+        toast.success('Post edited')
         setloading(false);
         props.setOpen(false);
         props.setToggle(prev => !prev);
       } catch (error) {
-        setOpen(true);
-        setmsg("Toxicity detected, try again!");
-        settype("error");
+        toast.error('Something went wrong')
         setloading(false);
-
       }
     }
   

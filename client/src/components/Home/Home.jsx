@@ -22,9 +22,12 @@ function Posts() {
   if (posts.length === 0)
     return (
       <>
-        <Grid container sx={{ justifyContent: 'center', marginTop: '20px' }}>
-          <Grid item sm={10} xs={10} md={7} lg={7} xl={7}>
+        <Grid container sx={{ justifyContent: 'center', marginTop: '20px', flexDirection: 'column', alignItems: 'center' }} spacing={2} >
+          <Grid item xs={11} sm={9} md={7} lg={6} xl={5} sx={{ width: '100%' }}>
             <Alert severity="error">No Post Found</Alert>
+          </Grid>
+          <Grid item xs={11} sm={9} md={7} lg={6} xl={5} sx={{ width: '100%' }}>
+            <AddPostHome toggle={toggle} setToggle={setToggle} />
           </Grid>
         </Grid>
       </>
@@ -46,7 +49,7 @@ function Posts() {
             </>
           ) : (
             <>
-              <Grid item sm={11} xs={9} md={7} lg={6} xl={5} sx={{marginBottom: 2}} width='100%'>
+              <Grid item sm={11} xs={9} md={7} lg={6} xl={5} sx={{ marginBottom: 2 }} width='100%'>
                 <Alert severity="warning">Please login to create post</Alert>
               </Grid>
             </>

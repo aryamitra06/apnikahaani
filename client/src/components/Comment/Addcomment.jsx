@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import LoadingButton from '@mui/lab/LoadingButton';
-
+import toast from 'react-hot-toast';
 
 function Addcomment(props) {
 
@@ -29,11 +29,13 @@ function Addcomment(props) {
         try {
           await newComment({email: localStorage.getItem('email'), postId: props.id, date: new Date(), comment: state.comment, profilephoto: localStorage.getItem('profilepic')});
           props.setToggle(prev => !prev);
+          toast.success('Comment successful')
           setTimeout(() => {
             clearField();
             setloading(false)
           }, 1000);
         } catch (error) {
+          toast.error('Something went wrong')
           setTimeout(() => {
             clearField();
             setloading(false)

@@ -1,58 +1,72 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { deleteComment } from '../../service/api';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Box from '@mui/material/Box';
+import CardHeader from "@mui/material/CardHeader";
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+
+import toast from 'react-hot-toast';
 
 function Comment(props) {
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     const deleteCommentHandle = async () => {
-        await deleteComment(props.id);
-        props.setToggle(prev => !prev);
+        try {
+            await deleteComment(props.id);
+            setAnchorEl(null);
+            toast.success('Comment deleted')
+            props.setToggle(prev => !prev);
+        } catch (error) {
+            toast.error('Something went wrong')
+        }
+
     }
 
 
     return (
         <>
-            <Card sx={{ display: 'flex', width: '97%', marginBottom: 2, alignItems: 'center', justifyContent: 'center' }}>
-                <Avatar sx={{ marginLeft: 2, height: '60px', width: '60px' }} alt="Avatar" src={props.profilephoto} />
-                <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-                    <CardContent sx={{ display: 'flex', width: '100%' }}>
-                        <Grid container alignItems='center' sx={{ width: '100%' }}>
-                            <Grid item sm={10} xs={9} md={10} lg={10} xl={10}>
-                                <Typography variant="h6">
-                                    {props.comment}
-                                </Typography>
-                                <Typography variant="subtitle2" color="text.secondary">
-                                    {props.email}
-                                </Typography>
-                                <Typography variant="subtitle2" color="text.secondary">
-                                {new Date(props.date).toDateString()}
-                                </Typography>
-                            </Grid>
-                            {
-                                (props.email === localStorage.getItem('email')) ? (
-                                    <>
-                                        <Grid item sm={1} xs={1} md={1} lg={1} xl={1}>
-                                            <IconButton color='error' aria-label="delete" onClick={() => deleteCommentHandle()}>
-                                                <DeleteIcon/>
-                                            </IconButton>
-                                        </Grid>
-                                    </>
-                                ) : (
-                                    <>
-                                    </>
-                                )
-                            }
-                        </Grid>
-                    </CardContent>
-                </Box>
+            <Card sx={{ width: '97%', marginBottom: 2 }}>
+                <CardHeader
+                    avatar={<Avatar src={props.profilephoto} />}
+                    action={
+                        <IconButton onClick={handleClick}>
+                            <MoreVertIcon />
+                        </IconButton>
+                    }
+                    title={props.email}
+                    subheader={new Date(props.date).toDateString()}
+                />
+                <CardContent>
+                    <Typography variant="body2" color="text.secondary">
+                        {props.comment}
+                    </Typography>
+                </CardContent>
             </Card>
+            <Menu
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                MenuListProps={{
+                    'aria-labelledby': 'basic-button',
+                }}
+            >
+                <MenuItem onClick={deleteCommentHandle}>Delete</MenuItem>
+            </Menu>
         </>
     )
 }

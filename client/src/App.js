@@ -6,6 +6,7 @@ import Addpost from "./components/Post/Addpost";
 import Auth from "./components/Authentication/Auth";
 import '../src/Additional Styles/style.css'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { Toaster } from 'react-hot-toast';
 
 const darkTheme = createTheme({
   palette: {
@@ -33,6 +34,10 @@ function App() {
             <Auth/>
           </Route>
         </Switch>
+        <Toaster
+                position="bottom-center"
+                reverseOrder={false}
+            />
       </Router>
       </ThemeProvider>
   );

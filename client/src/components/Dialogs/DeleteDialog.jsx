@@ -8,6 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { deletePost } from '../../service/api';
 import Grow from '@mui/material/Grow';
 import { useHistory } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Grow ref={ref} {...props} />;
@@ -17,10 +18,15 @@ export default function DeleteDialog(props) {
     const history = useHistory();
 
     const deletePostHandle = async () => {
-        await deletePost(props.id);
-        props.setOpen(false);
-        history.push('/')
-        props.setToggle(prev => !prev);
+        try {
+            await deletePost(props.id);
+            props.setOpen(false);
+            toast.success('Post deleted')
+            props.setToggle(prev => !prev);
+                history.push('/')
+        } catch (error) {
+            toast.error('Something went wrong')
+        }
       }
 
     return (
