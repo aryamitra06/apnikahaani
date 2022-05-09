@@ -1,9 +1,9 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { Link, useParams, useHistory } from 'react-router-dom';
-import { getPost, deletePost } from '../service/api';
+import { Link, useParams } from 'react-router-dom';
+import { getPost } from '../service/api';
 import Comments from './Comments';
-
+import ShareIcon from '@mui/icons-material/Share';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -14,44 +14,22 @@ import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import Avatar from '@mui/material/Avatar';
 
-import {
-  FacebookIcon,
-  FacebookShareButton,
-  TwitterShareButton,
-  WhatsappShareButton,
-  WhatsappIcon,
-  TwitterIcon,
-  FacebookMessengerShareButton,
-  FacebookMessengerIcon
-} from "react-share";
+import EditDialog from '../components/Dialogs/EditDialog';
+import DeleteDialog from '../components/Dialogs/DeleteDialog';
+
+import { IconButton } from '@mui/material';
+import SocialShareDialog from './Dialogs/SocialShareDialog';
 
 
 function Viewpost() {
-  const history = useHistory();
   const { id } = useParams();
   const [post, setPost] = useState({});
-
-  useEffect(() => {
-    const fetchData = async () => {
-      let data = await getPost(id);
-      setPost(data);
-    }
-    fetchData();
-  }, [id]);
-
-  const deletePostHandle = async () => {
-    await deletePost(id);
-    history.push('/');
-  }
-
-  //alert dialog
   const [open, setOpen] = React.useState(false);
+  const [open_delete, setOpen_delete] = React.useState(false);
+  const [open_social, setOpen_social] = React.useState(false);
+  const [toggle, setToggle] = React.useState([]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -60,6 +38,31 @@ function Viewpost() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleClickOpenForDelete = () => {
+    setOpen_delete(true);
+  };
+
+  const handleCloseForDelete = () => {
+    setOpen_delete(false);
+  };
+
+  const handleClickOpenForSocial = () => {
+    setOpen_social(true);
+  };
+
+  const handleCloseForSocial = () => {
+    setOpen_social(false);
+  };
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      let data = await getPost(id);
+      setPost(data);
+    }
+    fetchData();
+  }, [id, toggle]);
 
   const url = window.location.href;
   return (
@@ -70,7 +73,7 @@ function Viewpost() {
         alignItems='center'
         flexDirection='column'
       >
-        <Grid item xs={11} sm={9} md={7} lg={6} xl={5} sx={{ width: '100%', marginBottom: 3 }}>
+        <Grid item xs={11} sm={9} md={7} lg={6} xl={6} sx={{ width: '100%', marginBottom: 3 }}>
           <Card>
             <CardMedia
               component="img"
@@ -80,81 +83,65 @@ function Viewpost() {
             />
             <CardContent>
               <Grid container justifyContent='space-between' alignItems='center'>
-                <Grid>
-                  <Typography gutterBottom variant="h5">
-                    {post.title}
-                  </Typography>
+                <Grid sx={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                  <Avatar src={post.profilephoto} />
+                  <Grid>
+                    <Typography variant="body1">
+                      <Link style={{ textDecoration: 'none', color: 'inherit' }} to={`/?email=${post.email}`}>{post.email}</Link>
+                    </Typography>
+                    <Typography variant="body2" color='gray'>
+                      {new Date(post.created).toDateString()}
+                    </Typography>
+                  </Grid>
                 </Grid>
                 <Grid sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', top: -70, gap: '7px' }}>
-                  <WhatsappShareButton url={url}>
-                    <WhatsappIcon size={32} round={true} />
-                  </WhatsappShareButton>
-                  <FacebookShareButton url={url} >
-                    <FacebookIcon size={32} round={true} />
-                  </FacebookShareButton>
-                  <TwitterShareButton url={url} >
-                    <TwitterIcon size={32} round={true} />
-                  </TwitterShareButton>
-                  <FacebookMessengerShareButton url={url} >
-                    <FacebookMessengerIcon size={32} round={true} />
-                  </FacebookMessengerShareButton>
                   <Chip label={post.category} color="primary" />
                 </Grid>
               </Grid>
-              <Typography variant="body2" color="primary">
-                By <Link style={{ textDecoration: 'none', color: 'inherit' }} to={`/?email=${post.email}`}><b>{post.email}</b></Link> at {new Date(post.created).toDateString()}
+              <Typography gutterBottom variant="h6" marginTop='10px'>
+                {post.title}
               </Typography>
               <Typography variant="body2" color="text.secondary">
                 {post.desc}
               </Typography>
             </CardContent>
             <CardActions>
-              {
-                localStorage.getItem('token') && (post.email === localStorage.getItem('email')) ? (
                   <>
-                    <Link style={{ textDecoration: 'none', color: 'inherit', marginRight: '7px' }} to={`/edit/${post._id}`}><Button variant="outlined" startIcon={<EditIcon />}>Edit</Button></Link>
-                    <Button onClick={handleClickOpen} variant="outlined" color="error" startIcon={<DeleteIcon />}>Delete</Button>
+                    <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <div>
+                        <IconButton aria-label="share" onClick={handleClickOpenForSocial}>
+                          <ShareIcon />
+                        </IconButton>
+                      </div>
+                      <div>
+                        {
+                          (post.email === localStorage.getItem('email')) ? (
+                            <>
+                              <IconButton onClick={handleClickOpen} variant="outlined"><EditIcon /></IconButton>
+                              <IconButton onClick={handleClickOpenForDelete} variant="outlined" color="error"><DeleteIcon /></IconButton>
+                            </>
+                          ) : (
+                            <>
+                            </>
+                          )
+                        }
+                      </div>
+                    </div>
                   </>
-                ) : (
                   <>
                   </>
-                )
-              }
+
 
             </CardActions>
           </Card>
         </Grid>
-        <Grid item xs={11} sm={9} md={7} lg={6} xl={5} sx={{width: '100%'}}>
-          {
-            localStorage.getItem('token') ? (
-              <Comments id={post._id} />
-            ) : (
-              <>
-              </>
-            )
-          }
+        <Grid item xs={11} sm={9} md={7} lg={6} xl={6} sx={{ width: '100%' }}>
+          <Comments id={post._id} />
         </Grid>
       </Grid>
-
-      <Dialog
-        open={open}
-        onClose={handleClose}
-      >
-        <DialogTitle>
-          Delete
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Are you sure you want to delete this post?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button color='error' onClick={() => deletePostHandle()} autoFocus>
-            Delete
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <EditDialog open={open} handleClose={handleClose} id={post._id} setOpen={setOpen} toggle={toggle} setToggle={setToggle} />
+      <DeleteDialog open={open_delete} handleClose={handleCloseForDelete} id={post._id} setOpen={setOpen_delete} toggle={toggle} setToggle={setToggle} />
+      <SocialShareDialog open={open_social} handleClose={handleCloseForSocial} url={url} setOpen={setOpen_social} />
     </>
   );
 }

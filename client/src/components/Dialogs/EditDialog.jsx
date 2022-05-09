@@ -1,7 +1,14 @@
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Grow from '@mui/material/Grow';
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getPost, editPost, uploadFile } from '../service/api';
+import { getPost, editPost, uploadFile } from '../../service/api';
 import { useHistory } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
@@ -19,9 +26,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-import AppAlert from './AppAlert';
-
-  const Input = styled('input')({
+const Input = styled('input')({
     display: 'none',
   });
   const initialValues = {
@@ -32,11 +37,14 @@ import AppAlert from './AppAlert';
     email: localStorage.getItem('email'),
     created: new Date()
   }
-  
-  function Editpost() {
-    const history = useHistory();
-  
-    const { id } = useParams();
+
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Grow ref={ref} {...props} />;
+  });
+
+export default function EditDialog(props) {
+    const id = props.id;
     const [post, setPost] = useState(initialValues);
     const [file, setFile] = useState('');
     const [image, setImage] = useState('');
@@ -55,11 +63,11 @@ import AppAlert from './AppAlert';
     //getting form details from post
     useEffect(() => {
       const fetchData = async () => {
-        let data = await getPost(id);
+        let data = await getPost(id)
         setPost(data);
       }
       fetchData();
-    }, []);
+    }, [id]);
   
     //image handing
     useEffect(() => {
@@ -85,14 +93,15 @@ import AppAlert from './AppAlert';
         setOpen(true);
         setmsg("Updated");
         settype("success");
-        setTimeout(() => {
-          history.push(`/view/${id}`);
-        }, 2000)
+        setloading(false);
+        props.setOpen(false);
+        props.setToggle(prev => !prev);
       } catch (error) {
         setOpen(true);
         setmsg("Toxicity detected, try again!");
         settype("error");
-        setloading(false)
+        setloading(false);
+
       }
     }
   
@@ -100,18 +109,25 @@ import AppAlert from './AppAlert';
       setPost({ ...post, [e.target.name]: e.target.value });
     }
   
-    if (!localStorage.getItem('token') || post.email !== localStorage.getItem('email')) {
-      history.push('/?error=notallowed');
-    }
+
+
 
   return (
     <>
-      <Grid
+      <Dialog
+        sx={{color: 'red'}}
+        open={props.open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={props.handleClose}
+      >
+        <DialogTitle sx={{backgroundColor: '#1E1E1E'}}>Edit Post</DialogTitle>
+        <DialogContent sx={{backgroundColor: '#1E1E1E'}}>
+        <Grid
         container
-        sx={{ marginTop: 15 }}
         justifyContent='center'
       >
-        <Grid item sm={10} xs={11} md={10} lg={6} xl={6}>
+        <Grid item>
           <Card>
             <CardMedia
               component="img"
@@ -122,9 +138,6 @@ import AppAlert from './AppAlert';
             <CardContent>
               <Grid container justifyContent='space-between' alignItems='center'>
                 <Grid>
-                  <Typography gutterBottom variant="h5">
-                    Edit Post
-                  </Typography>
                 </Grid>
                 <Grid sx={{ position: 'relative', top: -70 }}>
                   <label htmlFor="icon-button-file">
@@ -167,15 +180,15 @@ import AppAlert from './AppAlert';
                 required
               />
             </CardContent>
-            <CardActions>
-              <LoadingButton fullWidth onClick={() => editPostHandle()} size="medium" disabled={post.title.length === 0 || post.desc.length === 0} loading={loading} loadingIndicator="Updating...">Save</LoadingButton>
-            </CardActions>
           </Card>
         </Grid>
       </Grid>
-      <AppAlert type={type} msg={msg} open={open} handleClose={handleClose} />
+        </DialogContent>
+        <DialogActions sx={{backgroundColor: '#1E1E1E'}}>
+          <Button onClick={props.handleClose}>Cancel</Button>
+          <LoadingButton onClick={() => editPostHandle()} size="medium" disabled={post.title.length === 0 || post.desc.length === 0} loading={loading}>Save</LoadingButton>
+        </DialogActions>
+      </Dialog>
     </>
-  );
+  )
 }
-
-export default Editpost;

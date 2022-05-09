@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { createPost, uploadFile } from '../service/api';
-import { useHistory } from 'react-router-dom'
+import { createPost, uploadFile } from '../../service/api';
 import React from 'react';
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
@@ -31,17 +30,13 @@ const initialValues = {
   created: new Date()
 }
 
-function Addpost() {
-
-  let history = useHistory();
-  if (!localStorage.getItem('token')) {
-    history.push('/');
-  }
+function AddPostHome(props) {
 
   const [post, setPost] = useState(initialValues);
   const [file, setFile] = useState('');
   const [image, setImage] = useState('https://images.pexels.com/photos/33545/sunrise-phu-quoc-island-ocean.jpg');
   const [loading, setloading] = useState(false);
+
   
   useEffect(() => {
     const fetchImage = async () => {
@@ -66,9 +61,17 @@ function Addpost() {
     setloading(true)
     try {
       await createPost(post);
-      setTimeout(() => {
-        history.push('/');
-      }, 2000)
+      props.setToggle(prev => !prev);
+      setPost({
+        title: '',
+        desc: '',
+        cover: 'https://images.pexels.com/photos/33545/sunrise-phu-quoc-island-ocean.jpg',
+        category: 'Uncategorized',
+        email: localStorage.getItem('email'),
+        profilephoto: localStorage.getItem('profilepic'),
+        created: new Date()
+      })
+      setloading(false)
       
     } catch (err) {
       setloading(false)
@@ -81,16 +84,10 @@ function Addpost() {
 
   return (
     <>
-      <Grid
-        container
-        sx={{ marginTop: 15 }}
-        justifyContent='center'
-      >
-        <Grid item sm={10} xs={11} md={10} lg={6} xl={6}>
-          <Card>
+          <Card sx={{marginBottom: '20px'}}>
             <CardMedia
               component="img"
-              height="300"
+              height="110"
               image={image}
               alt="green iguana"
             />
@@ -110,7 +107,11 @@ function Addpost() {
                   </label>
                 </Grid>
               </Grid>
+            <Grid container spacing={2}>
+                <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
               <TextField fullWidth label="Title" variant="outlined" sx={{ marginBottom: 2 }} type="text" name="title" value={post.title} onChange={(e) => handleChange(e)} required/>
+                </Grid>
+                <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
               <FormControl fullWidth required>
                 <InputLabel id="select-label">Category</InputLabel>
                 <Select
@@ -129,11 +130,13 @@ function Addpost() {
                   <MenuItem value="Return">Return</MenuItem>
                 </Select>
               </FormControl>
+                </Grid>
+            </Grid>
               <TextField
                 sx={{ marginTop: 2 }}
                 label="Description"
                 multiline
-                rows={4}
+                rows={2}
                 fullWidth
                 type='text'
                 name="desc"
@@ -146,10 +149,8 @@ function Addpost() {
               <LoadingButton fullWidth onClick={() => publishPost()} size="medium" disabled={post.title.length===0 || post.desc.length===0} loading={loading} loadingIndicator="Posting...">Post</LoadingButton>
             </CardActions>
           </Card>
-        </Grid>
-      </Grid>
     </>
   );
 }
 
-export default Addpost;
+export default AddPostHome;

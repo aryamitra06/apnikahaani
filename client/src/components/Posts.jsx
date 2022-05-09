@@ -1,11 +1,11 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { getAllPosts } from '../service/api';
 import Postcard from './Postcard';
 import Grid from '@mui/material/Grid';
 import Alert from '@mui/material/Alert';
-
+import AddPostHome from './Home/AddPostHome';
 function Posts() {
   const [posts, setPosts] = useState([]);
   const { search } = useLocation();
@@ -37,9 +37,24 @@ function Posts() {
         alignItems='center'
         flexDirection='column'
       >
+        {
+          (localStorage.getItem('token')) ? (
+            <>
+              <Grid item xs={11} sm={9} md={7} lg={6} xl={5} sx={{ width: '100%' }}>
+                <AddPostHome toggle={toggle} setToggle={setToggle} />
+              </Grid>
+            </>
+          ) : (
+            <>
+              <Grid item sm={11} xs={9} md={7} lg={6} xl={5} sx={{marginBottom: 2}} width='100%'>
+                <Alert severity="warning">Please login to create post</Alert>
+              </Grid>
+            </>
+          )
+        }
         {posts.map(post => (
-          <Grid item xs={11} sm={9} md={7} lg={6} xl={5} sx={{width: '100%'}}>
-            <Postcard category={post.category} id={post._id} title={post.title} author={post.email} desc={post.desc} cover={post.cover} profilephoto={post.profilephoto} created={post.created} toggle={toggle} setToggle={setToggle}/>
+          <Grid item xs={11} sm={9} md={7} lg={6} xl={5} sx={{ width: '100%' }}>
+            <Postcard category={post.category} id={post._id} title={post.title} author={post.email} desc={post.desc} cover={post.cover} profilephoto={post.profilephoto} created={post.created} toggle={toggle} setToggle={setToggle} />
           </Grid>
         ))}
       </Grid>

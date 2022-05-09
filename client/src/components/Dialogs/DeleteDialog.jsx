@@ -5,18 +5,21 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { deletePost } from '../service/api';
+import { deletePost } from '../../service/api';
 import Grow from '@mui/material/Grow';
+import { useHistory } from 'react-router-dom';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Grow ref={ref} {...props} />;
   });
 
 export default function DeleteDialog(props) {
+    const history = useHistory();
 
     const deletePostHandle = async () => {
         await deletePost(props.id);
         props.setOpen(false);
+        history.push('/')
         props.setToggle(prev => !prev);
       }
 

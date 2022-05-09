@@ -19,9 +19,11 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem'
-import EditDialog from './EditDialog';
+import EditDialog from '../components/Dialogs/EditDialog';
 import Divider from '@mui/material/Divider';
-import DeleteDialog from './DeleteDialog';
+import DeleteDialog from '../components/Dialogs/DeleteDialog';
+import Chip from '@mui/material/Chip';
+import SocialShareDialog from './Dialogs/SocialShareDialog';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -53,6 +55,7 @@ export default function Postcard(props) {
 
   const [open, setOpen] = React.useState(false);
   const [open_delete, setOpen_delete] = React.useState(false);
+  const [open_social, setOpen_social] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -71,8 +74,15 @@ export default function Postcard(props) {
   const handleCloseForDelete = () => {
     setOpen_delete(false);
   };
-  
+  const handleClickOpenForSocial = () => {
+    setOpen_social(true);
+  };
 
+  const handleCloseForSocial = () => {
+    setOpen_social(false);
+  };
+
+  const url = `http://localhost:3000/view/${props.id}`
   return (
     <>
       <Card sx={{ marginBottom: '15px' }}>
@@ -120,7 +130,8 @@ export default function Postcard(props) {
         />
         </Link>
         <CardContent>
-          <Link style={{ textDecoration: 'none', color: 'inherit' }} to={`/view/${props.id}`}><Typography variant="body2" color="text.secondary">
+        <Chip label={props.category} color="primary" sx={{marginBottom: 1}}/>
+          <Link style={{ textDecoration: 'none', color: 'inherit' }} to={`/view/${props.id}`}><Typography variant="body1" color="text.primary">
             {props.title}
           </Typography></Link>
         </CardContent>
@@ -128,7 +139,7 @@ export default function Postcard(props) {
           <IconButton aria-label="add to favorites">
             <FavoriteIcon />
           </IconButton>
-          <IconButton aria-label="share">
+          <IconButton aria-label="share" onClick={handleClickOpenForSocial}>
             <ShareIcon />
           </IconButton>
           <ExpandMore
@@ -152,6 +163,7 @@ export default function Postcard(props) {
       </Card>
       <EditDialog open={open} handleClose={handleClose} id={props.id} setOpen={setOpen} toggle={props.toggle} setToggle={props.setToggle} />
       <DeleteDialog open={open_delete} handleClose={handleCloseForDelete} id={props.id} setOpen={setOpen_delete} toggle={props.toggle} setToggle={props.setToggle}/>
+      <SocialShareDialog open={open_social} handleClose={handleCloseForSocial} url={url} setOpen={setOpen_social}/>
     </>
   );
 }
