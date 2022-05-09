@@ -1,5 +1,5 @@
 import React from 'react'
-import { deleteComment } from '../service/api';
+import { deleteComment } from '../../service/api';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';

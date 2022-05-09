@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { createPost, uploadFile } from '../service/api';
+import { createPost, uploadFile } from '../../service/api';
 import { useHistory } from 'react-router-dom'
 import React from 'react';
 import { styled } from '@mui/material/styles';

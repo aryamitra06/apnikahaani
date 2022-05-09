@@ -1,9 +1,9 @@
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar/Navbar";
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import Home from "./components/Home";
-import Viewpost from "./components/Viewpost";
-import Addpost from "./components/Addpost";
-import Auth from "./components/Auth";
+import Viewpost from "./components/Post/Viewpost";
+import Home from './components/Home/Home'
+import Addpost from "./components/Post/Addpost";
+import Auth from "./components/Authentication/Auth";
 import '../src/Additional Styles/style.css'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
@@ -21,7 +21,7 @@ function App() {
         <Navbar />
         <Switch>
         <Route exact path="/">
-            <Home />
+            <Home/>
           </Route>
           <Route exact path="/add">
             <Addpost/>

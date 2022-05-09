@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Link } from "react-router-dom";
-import Comments from './Comments';
+import Comments from '../Comment/Comments';
 
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
@@ -19,11 +19,11 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem'
-import EditDialog from '../components/Dialogs/EditDialog';
+import EditDialog from '../Dialogs/EditDialog';
 import Divider from '@mui/material/Divider';
-import DeleteDialog from '../components/Dialogs/DeleteDialog';
+import DeleteDialog from '../Dialogs/DeleteDialog';
 import Chip from '@mui/material/Chip';
-import SocialShareDialog from './Dialogs/SocialShareDialog';
+import SocialShareDialog from '../Dialogs/SocialShareDialog';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;

@@ -1,6 +1,6 @@
 import React from 'react'
 import {GoogleLogin} from 'react-google-login';
-import { googleAuth } from '../service/api';
+import { googleAuth } from '../../service/api';
 import Grid from '@mui/material/Grid';
 function Auth() {
 

@@ -1,26 +1,25 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { getPost } from '../service/api';
-import Comments from './Comments';
+import { getPost } from '../../service/api';
+import Comments from '../Comment/Comments';
 import ShareIcon from '@mui/icons-material/Share';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Avatar from '@mui/material/Avatar';
 
-import EditDialog from '../components/Dialogs/EditDialog';
-import DeleteDialog from '../components/Dialogs/DeleteDialog';
+import EditDialog from '../Dialogs/EditDialog';
+import DeleteDialog from '../Dialogs/DeleteDialog';
 
 import { IconButton } from '@mui/material';
-import SocialShareDialog from './Dialogs/SocialShareDialog';
+import SocialShareDialog from '../Dialogs/SocialShareDialog';
 
 
 function Viewpost() {

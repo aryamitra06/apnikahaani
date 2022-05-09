@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
-import { getComments } from '../service/api'
+import { getComments } from '../../service/api'
 import Comment from './Comment'
 import Addcomment from './Addcomment'
 import Typography from '@mui/material/Typography';

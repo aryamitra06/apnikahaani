@@ -1,11 +1,11 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { getAllPosts } from '../service/api';
-import Postcard from './Postcard';
+import { getAllPosts } from '../../service/api';
+import Postcard from '../Post/Postcard';
 import Grid from '@mui/material/Grid';
 import Alert from '@mui/material/Alert';
-import AddPostHome from './Home/AddPostHome';
+import AddPostHome from './AddPostHome';
 function Posts() {
   const [posts, setPosts] = useState([]);
   const { search } = useLocation();
